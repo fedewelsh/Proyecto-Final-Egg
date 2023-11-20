@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/style.css}">     
+    </th:block>
+    <style type="text/css">
+        .tg  {
+            border-collapse:collapse;
+            border-spacing:0;
+            margin:0px auto;
+        }
+        .tg td{
+            border-color:black;
+            border-style:solid;
+            border-width:1px;
+            font-family:Arial, sans-serif;
+            font-size:14px;
+            overflow:hidden;
+            padding:10px 5px;
+            word-break:normal;
+        }
+        .tg th{
+            border-color:black;
+            border-style:solid;
+            border-width:1px;
+            font-family:Arial, sans-serif;
+            font-size:14px;
+            font-weight:normal;
+            overflow:hidden;
+            padding:10px 5px;
+            word-break:normal;
+        }
+        .tg .tg-46ru{
+            background-color:#96fffb;
+            border-color:inherit;
+            text-align:left;
+            vertical-align:top
+        }
+        .tg .tg-0hty{
+            background-color:#000000;
+            border-color:inherit;
+            color:#ffffff;
+            font-weight:bold;
+            text-align:left;
+            vertical-align:top
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container m-5">
+        <table class="tg">
+            <thead>
+                <tr>
+                    <th class="tg-0hty">Id de la Editorial</th>
+                    <th class="tg-0hty">Nombre de la Editorial</th>
+                </tr>
+            </thead>
+            <tbody th:each="editorial : ${editoriales}">
+                <tr>
+                    <th class="tg-62u6" th:text="${editorial.id}"></th>
+                    <td class="tg-62u6" th:text="${editorial.nombre}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+        <div class="card-body">
+            <h5 class="card-title">Error</h5>
+            <p class="card-text" th:text="${error}"></p>
+        </div>                   
+    </div>
+
+    <div th:if="${exito != null}" class="card text-white bg-succes mb-3 mt-3 mensajeExito" >
+        <div class="card-body">
+            <h5 class="card-title">Exito!!!</h5>
+            <p class="card-text" th:text="${exito}"></p>
+        </div>    
+</body>
+</html>

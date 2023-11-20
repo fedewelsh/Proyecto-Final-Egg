@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/style.css}">     
+    </th:block>
+    <style type="text/css">
+        .tg  {
+            border-collapse:collapse;
+            border-spacing:0;
+            margin:0px auto;
+        }
+        .tg td{
+            border-color:black;
+            border-style:solid;
+            border-width:1px;
+            font-family:Arial, sans-serif;
+            font-size:14px;
+            overflow:hidden;
+            padding:10px 5px;
+            word-break:normal;
+        }
+        .tg th{
+            border-color:black;
+            border-style:solid;
+            border-width:1px;
+            font-family:Arial, sans-serif;
+            font-size:14px;
+            font-weight:normal;
+            overflow:hidden;
+            padding:10px 5px;
+            word-break:normal;
+        }
+        .tg .tg-46ru{
+            background-color:#96fffb;
+            border-color:inherit;
+            text-align:left;
+            vertical-align:top
+        }
+        .tg .tg-0hty{
+            background-color:#000000;
+            border-color:inherit;
+            color:#ffffff;
+            font-weight:bold;
+            text-align:left;
+            vertical-align:top
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <form class="formulario" action="/libro/registro" method="POST">
+                <div class="form-group">
+                    <label>Cargar Libro</label>
+                    <input type="number" class="form-group" name="isbn" placeholder="ISBN">
+                </div>
+                <div>
+                    <input type="text" class="form-group" name="titulo" placeholder="Titulo del Libro">
+                </div>
+                <div>
+                    <input type="number" class="form-group" name="ejemplares" placeholder="Cantidad de Ejemplares">
+                </div>
+
+
+                <div>
+                    <select name="idAutor">
+                        <option>Seleccionar Autor</option>
+                        <option th:each="autor : ${autores}"
+                                th:value="${autor.id}"
+                                th:text="${autor.nombre}"/>
+                    </select>
+                </div>
+
+                <div>
+                    <select name="idEditorial">
+                        <option>Seleccionar Editorial</option>
+                        <option th:each="editorial : ${editoriales}"
+                                th:value="${editorial.id}"
+                                th:text="${editorial.nombre}"/>
+                    </select>
+                </div>
+
+
+
+                <div>   
+                    <button type="submit" class="btn btn-primary"> Guardar </button>
+                </div>
+
+
+
+                <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
+                    <div class="card-body">
+                        <h5 class="card-title">Error</h5>
+                        <p class="card-text" th:text="${error}"></p>
+                    </div>                   
+                </div>
+
+                <div th:if="${exito != null}" class="card text-white bg-succes mb-3 mt-3 mensajeExito" >
+                    <div class="card-body">
+                        <h5 class="card-title">Exito!!!</h5>
+                        <p class="card-text" th:text="${exito}"></p>
+                    </div>    
+
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary"> Volver </button>
+                </div>
+            </form>            
+        </div>
+    </body>
+</html>
