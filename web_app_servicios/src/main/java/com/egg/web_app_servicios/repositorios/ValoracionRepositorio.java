@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ValoracionRepositorio extends JpaRepository<Valoracion,String>  {
     
-    @Query("SELECT v FROM Valoracion v WHERE v.proveedor.nombre = :nombre")
-    public List<Valoracion> buscarPorProveedor(@Param("nombre")String nombre);
-            
+//    @Query("SELECT v FROM Valoracion v WHERE v.proveedor.nombre = :nombre")
+//    public List<Valoracion> buscarPorProveedor(@Param("nombre")String nombre);
+//            
 }
