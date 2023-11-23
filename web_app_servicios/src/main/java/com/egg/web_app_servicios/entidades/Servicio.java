@@ -19,9 +19,6 @@ public class Servicio {
     private String id;
     
     private String tipo_servicio;
-    
-    @OneToOne
-    private Imagen imagen;
 
     public Servicio() {
     }
@@ -41,14 +38,8 @@ public class Servicio {
     public void setTipo_servicio(String tipo_servicio) {
         this.tipo_servicio = tipo_servicio;
     }
-
-    public Imagen getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(Imagen imagen) {
-        this.imagen = imagen;
-    }
+    
+    
     
     
     

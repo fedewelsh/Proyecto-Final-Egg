@@ -5,6 +5,7 @@
 package com.egg.web_app_servicios.service;
 
 import com.egg.web_app_servicios.entidades.Usuario;
+import com.egg.web_app_servicios.excepciones.MiException;
 import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,9 @@ public class UsuarioService {
     private ImagenService imagenService;
     
     @Transactional
-    public void crearUsuario(String nombre, Integer telefono, String direccion){
+    public void crearUsuario(String nombre, Integer telefono, String direccion) throws MiException{
         
+        validar(nombre, telefono, direccion);
         Usuario usuario = new Usuario();
         
         usuario.setNombre(nombre);
@@ -44,9 +46,10 @@ public class UsuarioService {
         return usuarios;
     }
     
-    public void modificarUsuario(String id, String nombre, Integer telefono, String direccion){
+    public void modificarUsuario(String id, String nombre, Integer telefono, String direccion) throws MiException{
         
-       Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        validar(nombre, telefono, direccion);
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
          
         if(respuesta.isPresent()){
             
@@ -54,14 +57,26 @@ public class UsuarioService {
             
             usuario.setNombre(nombre);
             usuario.setTelefono(telefono);
-            usuario.setDireccion(direccion);            
+            usuario.setDireccion(direccion);
+            usuarioRepositorio.save(usuario);
         }
-        
-        
-        
+       
     }
     
-    
+    private void validar(String nombre, Integer telefono, String direccion) throws MiException{
+        
+        if(nombre.isEmpty() || nombre == null){
+            throw new MiException("El nombre no puede ser nulo o estar vacio");   
+        }
+        
+        if(telefono == null){
+            throw new MiException("El telefono no puede ser nulo o estar vacio");
+        }
+        
+        if(direccion.isEmpty() || direccion == null){
+            throw new MiException("La direccion no puede ser nulo o estar vacio");
+        }
+    }
     
     
 }

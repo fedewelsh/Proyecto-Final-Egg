@@ -4,10 +4,12 @@
  */
 package com.egg.web_app_servicios.entidades;
 
+
 import com.egg.web_app_servicios.enumeraciones.Rol;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
@@ -19,8 +21,7 @@ public class Usuario {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator (name="uuid", strategy = "uuid2")
-    private String id;
-    
+    private String id;    
     private String nombre;
     private Integer telefono;
     private String direccion;
@@ -31,10 +32,21 @@ public class Usuario {
     
     @Enumerated(EnumType.STRING)
     private Rol rol;
+    
 
     public Usuario() {
     }
 
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    
+    
     public String getId() {
         return id;
     }
@@ -83,12 +95,6 @@ public class Usuario {
         this.imagen = imagen;
     }
 
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
+    
     
 }
