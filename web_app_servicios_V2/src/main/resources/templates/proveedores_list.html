@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+.tg  {border-collapse:collapse;border-color:#93a1a1;border-spacing:0;margin:0px auto;}
+.tg td{background-color:#fdf6e3;border-color:#93a1a1;border-style:solid;border-width:1px;color:#002b36;
+  font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{background-color:#657b83;border-color:#93a1a1;border-style:solid;border-width:1px;color:#fdf6e3;
+  font-family:Arial, sans-serif;font-size:14px;font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-46ru{background-color:#96fffb;border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-4ly7{background-color:#96fffb;border-color:inherit;color:#000000;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-0hty{background-color:#000000;border-color:inherit;color:#ffffff;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-nlhk{background-color:#000000;border-color:inherit;color:#ffffff;font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-46ji{background-color:#000000;border-color:inherit;font-weight:bold;text-align:left;vertical-align:top}
+.tg .tg-8m24{background-color:#000000;text-align:left;vertical-align:top}
+.tg .tg-2xle{background-color:#96fffb;border-color:inherit;color:#000000;text-align:left;vertical-align:top}
+.tg .tg-4aw5{background-color:#96fffb;text-align:left;vertical-align:top}
+</style>
+    </head>
+    <body>
+        <table class="tg">
+<thead>
+  <tr>
+    <th class="tg-nlhk">Id del Proveedor</th>
+    <th class="tg-0hty">Nombre del Proveedor</th>
+    <th class="tg-0hty">Telefono </th>
+    <th class="tg-0hty">Email</th>
+    <th class="tg-0hty">Tipo de Servicio que ofrece</th>
+    <th class="tg-46ji">Imagen</th>
+    <th class="tg-8m24"><span style="font-weight:bold">Valoracion</span></th>
+  </tr>
+</thead>
+<tbody th:each="proveedor : ${proveedores}" th:if="${tipoServicioSeleccionado == null or proveedor.tipo_servicio == tipoServicioSeleccionado}">
+  <tr>
+    <th class="tg-4ly7" th:text="${proveedor.id}"></th>
+    <td th:text="${proveedor.nombre}"></td>
+    <td th:text="${proveedor.telefono}"></td>
+    <td th:text="${proveedor.email}"></td>
+    <td th:text="${proveedor.tipo_servicio}"></td>
+    
+  </tr>
+</tbody>
+</table>
+        <p th:if="${tipoServicioSeleccionado}" th:text="'Tipo de Servicio: ' + ${tipoServicioSeleccionado}"></p>
+    </body>
+</html>
