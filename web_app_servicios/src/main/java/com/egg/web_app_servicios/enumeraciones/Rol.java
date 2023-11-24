@@ -7,6 +7,7 @@ package com.egg.web_app_servicios.enumeraciones;
  
     public enum Rol {
     USER,
+    GUEST,
     ADMIN;
 }
     

@@ -27,17 +27,18 @@ public class ServicioService {
        
        
     @Transactional
-    public void crearServicio(String tipo_servicio) throws MiException{
+    public void crearServicio(String tipo_servicio, String descripcion) throws MiException{
         
         validar(tipo_servicio);
         Servicio servicio = new Servicio();
         
         servicio.setTipo_servicio(tipo_servicio);
+        servicio.setDescripcion(descripcion);
                        
         servicioRepositorio.save(servicio);
     }
     
-    public void listarServicio(String id, String tipo_servicio, MultipartFile archivo){
+    public void listarServicio(){
         
         List<Servicio> servicios = new ArrayList();
         
@@ -46,7 +47,7 @@ public class ServicioService {
     }
     
     @Transactional
-    public void modificarServicio(String id, String tipo_servicio) throws MiException{
+    public void modificarServicio(String id, String tipo_servicio, String descripcion) throws MiException{
         
         validar(tipo_servicio);
         Optional<Servicio> respuesta = servicioRepositorio.findById(id);
@@ -55,6 +56,7 @@ public class ServicioService {
            Servicio servicio = respuesta.get();
            
            servicio.setTipo_servicio(tipo_servicio);
+           servicio.setDescripcion(descripcion);
                      
            servicioRepositorio.save(servicio);           
         }        
@@ -63,8 +65,7 @@ public class ServicioService {
     private void validar(String tipo_servicio) throws MiException{
         
         if(tipo_servicio.isEmpty() || tipo_servicio == null){
-            throw new MiException("El tipo de servicio no puede ser nulo o estar vacio");
-            
+            throw new MiException("El tipo de servicio no puede ser nulo o estar vacio");            
         }
     }
 }

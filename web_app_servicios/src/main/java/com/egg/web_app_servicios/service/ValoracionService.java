@@ -32,7 +32,7 @@ public class ValoracionService {
      
   }
     
-   @Transactional
+    @Transactional
     public void modificarValoracion(String id, String comentario, Integer puntuacion){
         
        
@@ -48,6 +48,8 @@ public class ValoracionService {
         }        
     }
     
+    //OJO METODO VALIDAR RESPECTO DE LA PUNTUACION EJEMPLO NO MAYOR A 5 
+    // EN EL CASO DE QUE SEA POR NUMERACION
     
 }
 

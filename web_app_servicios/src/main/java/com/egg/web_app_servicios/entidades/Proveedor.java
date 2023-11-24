@@ -25,8 +25,10 @@ public class Proveedor {
     private String id;
     
     private String nombre;
-    private Integer telefono;
-    private String password;
+    
+    private String telefono;
+    private String email;
+    private String password;    
     
     @OneToOne
     private Servicio servicio;
@@ -42,6 +44,14 @@ public class Proveedor {
 
     
     public Proveedor() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     public Rol getRol() {
@@ -70,11 +80,11 @@ public class Proveedor {
         this.nombre = nombre;
     }
 
-    public Integer getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Integer telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

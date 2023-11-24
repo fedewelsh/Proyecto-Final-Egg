@@ -25,14 +25,16 @@ public class UsuarioService {
     private ImagenService imagenService;
     
     @Transactional
-    public void crearUsuario(String nombre, Integer telefono, String direccion) throws MiException{
+    public void crearUsuario(String nombre, String telefono, String email, String barrio, String direccion) throws MiException{
         
-        validar(nombre, telefono, direccion);
+        validar(nombre, telefono, email, barrio, direccion);
         Usuario usuario = new Usuario();
         
         usuario.setNombre(nombre);
         usuario.setTelefono(telefono);
+        usuario.setEmail(email);
         usuario.setDireccion(direccion);
+        usuario.setBarrio(barrio);
         
         usuarioRepositorio.save(usuario);
     }
@@ -46,9 +48,9 @@ public class UsuarioService {
         return usuarios;
     }
     
-    public void modificarUsuario(String id, String nombre, Integer telefono, String direccion) throws MiException{
+    public void modificarUsuario(String id, String nombre, String telefono, String email, String barrio, String direccion) throws MiException{
         
-        validar(nombre, telefono, direccion);
+        validar(nombre, telefono, email, barrio, direccion);
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
          
         if(respuesta.isPresent()){
@@ -57,26 +59,56 @@ public class UsuarioService {
             
             usuario.setNombre(nombre);
             usuario.setTelefono(telefono);
+            usuario.setEmail(email);
+            usuario.setDireccion(direccion);
             usuario.setDireccion(direccion);
             usuarioRepositorio.save(usuario);
-        }
-       
+        }       
     }
     
-    private void validar(String nombre, Integer telefono, String direccion) throws MiException{
+    public void validar (String nombre, String telefono, String email, String barrio, String direccion) throws MiException{
         
-        if(nombre.isEmpty() || nombre == null){
-            throw new MiException("El nombre no puede ser nulo o estar vacio");   
+        if (nombre.isEmpty() || nombre == null) {
+            throw new MiException("El nombre no puede ser nulo o estar vacío");
+        }
+        if (telefono.isEmpty() || telefono == null) {
+            throw new MiException ("El telefono no puede ser nulo o estar vacio");
+        }else if (telefono.length() < 9) {
+            throw new MiException ("El telefono debe tenes mas de 9 digitos");
         }
         
-        if(telefono == null){
-            throw new MiException("El telefono no puede ser nulo o estar vacio");
+        if (email.isEmpty()|| email == null){
+            throw new MiException ("El email no puede ser nulo o estar vacio");
         }
         
-        if(direccion.isEmpty() || direccion == null){
-            throw new MiException("La direccion no puede ser nulo o estar vacio");
+        if (barrio.isEmpty() || barrio == null){
+            throw new MiException ("El barrio no puede ser nulo o estar vacio");
+        }
+        
+        if (direccion.isEmpty() || direccion == null) {
+             throw new MiException ("La direccion no puede ser nula o estar vacia");
         }
     }
+    
+      
+    
+    
+    
+//    private void validar(String nombre, String telefono, String direccion) throws MiException{
+//        
+//        if(nombre.isEmpty() || nombre == null){
+//            throw new MiException("El nombre no puede ser nulo o estar vacio");   
+//        }
+//        
+//        if(telefono.isEmpty() || telefono == null){
+//            throw new MiException("El telefono no puede ser nulo o estar vacio");
+//        }else if (telefono.length() < 9) {
+//            throw new MiException ("El telefono debe tenes mas de 9 digitos");
+//        }
+//        if(direccion.isEmpty() || direccion == null){
+//            throw new MiException("La direccion no puede ser nulo o estar vacio");
+//        }
+//    }
     
     
 }

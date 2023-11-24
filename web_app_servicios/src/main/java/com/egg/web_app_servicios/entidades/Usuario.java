@@ -23,11 +23,14 @@ public class Usuario {
     @GenericGenerator (name="uuid", strategy = "uuid2")
     private String id;    
     private String nombre;
-    private Integer telefono;
+    
+    private String telefono;
+    private String email;
+    private String barrio;
     private String direccion;
     private String password;
-    
-    @OneToOne
+                                         
+    @OneToOne                           
     private Imagen imagen;
     
     @Enumerated(EnumType.STRING)
@@ -37,6 +40,23 @@ public class Usuario {
     public Usuario() {
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
+    }
+
+    
     public Rol getRol() {
         return rol;
     }
@@ -63,11 +83,11 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public Integer getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Integer telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

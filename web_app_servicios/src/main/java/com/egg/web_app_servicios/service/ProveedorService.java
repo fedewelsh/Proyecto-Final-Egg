@@ -7,7 +7,7 @@ package com.egg.web_app_servicios.service;
 
 import com.egg.web_app_servicios.entidades.Proveedor;
 import com.egg.web_app_servicios.entidades.Servicio;
-import com.egg.web_app_servicios.entidades.Usuario;
+
 import com.egg.web_app_servicios.entidades.Valoracion;
 import com.egg.web_app_servicios.excepciones.MiException;
 import com.egg.web_app_servicios.repositorios.ProveedorRepositorio;
@@ -37,9 +37,9 @@ public class ProveedorService {
     private ImagenService imagenService;
     
     @Transactional
-    public void crearProveedor(String nombre, Integer telefono, String password, String password2, String idServicio, String idValoracion) throws MiException{
+    public void crearProveedor(String nombre, String telefono, String email, String password, String password2, String idServicio, String idValoracion) throws MiException{
         
-        validar(nombre, telefono, idServicio);
+        validar(nombre, telefono, email, idServicio);
         Servicio servicio = servicioRepositorio.findById(idServicio).get();
         Valoracion valoracion = valoracionRepositorio.findById(idValoracion).get();
         
@@ -47,6 +47,7 @@ public class ProveedorService {
         
         proveedor.setNombre(nombre);
         proveedor.setTelefono(telefono);
+        proveedor.setEmail(email);
         proveedor.setServicio(servicio);
         proveedor.setValoracion(valoracion);
         proveedorRepositorio.save(proveedor);
@@ -63,9 +64,9 @@ public class ProveedorService {
     }
     
     @Transactional
-    public void modificarProveedor(String id, String nombre, Integer telefono, String idServicio, String idValoracion) throws MiException{
+    public void modificarProveedor(String id, String nombre, String telefono, String email, String idServicio, String idValoracion) throws MiException{
         
-        validar(nombre, telefono, idServicio);
+        validar(nombre, telefono, email, idServicio);
         Optional<Proveedor> respuesta = proveedorRepositorio.findById(id);
         Optional<Servicio> respuestaServicio = servicioRepositorio.findById(idServicio);
         Optional<Valoracion> respuestaValoracion = valoracionRepositorio.findById(idValoracion);
@@ -87,6 +88,7 @@ public class ProveedorService {
             
             proveedor.setNombre(nombre);
             proveedor.setTelefono(telefono);
+            proveedor.setEmail(email);
             proveedor.setServicio(servicio);
             proveedor.setValoracion(valoracion);
             
@@ -94,14 +96,18 @@ public class ProveedorService {
         }
     }  
     
-    private void validar(String nombre, Integer telefono, String idServicio) throws MiException{
+    private void validar(String nombre, String telefono, String email, String idServicio) throws MiException{
         
         if(nombre.isEmpty() || nombre == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");   
         }
-        
+              
         if(telefono == null){
             throw new MiException("El telefono no puede ser nulo o estar vacio");
+        }
+        
+        if(email.isEmpty() || email == null){
+            throw new MiException("El email no puede ser nulo o estar vacio");
         }
         
         if(idServicio.isEmpty() || idServicio == null){

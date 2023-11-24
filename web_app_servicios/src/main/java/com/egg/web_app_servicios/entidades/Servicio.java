@@ -7,7 +7,7 @@ package com.egg.web_app_servicios.entidades;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -19,8 +19,17 @@ public class Servicio {
     private String id;
     
     private String tipo_servicio;
+    private String descripcion;
 
     public Servicio() {
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public String getId() {

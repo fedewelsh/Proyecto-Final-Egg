@@ -32,10 +32,10 @@ public class UsuarioControlador {
     }
     
     @PostMapping("/registro")
-    public String registro(@RequestParam String nombre, @RequestParam Integer telefono, @RequestParam String direccion){
+    public String registro(@RequestParam String nombre, @RequestParam String telefono, @RequestParam String email, @RequestParam String barrio, @RequestParam String direccion){
         
         try {
-            usuarioService.crearUsuario(nombre, telefono, direccion);
+            usuarioService.crearUsuario(nombre, telefono, email, barrio, direccion);
         } catch (MiException ex) {
             Logger.getLogger(UsuarioControlador.class.getName()).log(Level.SEVERE, null, ex);
             return "usuario_form.html";

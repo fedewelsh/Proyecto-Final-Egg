@@ -6,8 +6,6 @@ body {
     background-color: rgb(248, 248, 180);
 }
 
-
-
 nav {
     background-color: #c83e03;
     overflow: hidden;
@@ -24,24 +22,24 @@ nav a {
     padding: 14px 16px;
     text-decoration: none;
     font-size: 25px;
+    transition: transform 0.3s ease;
     
 }
 
 nav a:hover {
     background-color: #ef5311;
-    color: #333;
+    color: #fff;
     text-decoration: none;
+    transform: scale(1.1);
 }
 
 .logo {
     float: left;
     width: auto;
-    height: 3em;
-    margin-top: 10px;
-    margin-right: 14px; 
+    height: 4em;
+    margin-top: 1px;
+    margin-left: 14px; 
 }
-
-
 
 
 .dropdown {
@@ -57,6 +55,7 @@ nav a:hover {
     background-color: #c83e03;
     border: none;
     cursor: pointer;
+    transition: transform 0.3s ease;
     
 }
 
@@ -64,12 +63,13 @@ nav a:hover {
     display: none; /* Oculta el primer elemento (nombre del botón) en la lista desplegable */
 }
 .dropdown select:hover {
+
     background-color: #ef5311;
+    transform: scale(1.1);
 }
 
 .dropdown select:focus {
     outline: none;
-   
 }
 
 .dropdown::after {
@@ -182,7 +182,7 @@ section{
 }
 
 .category-button {
-    width: 80px; /* Ajusta el ancho de cada botón según sea necesario */
+    width: 80px;
     text-align: center;
 }
 
@@ -193,9 +193,5 @@ section{
 .merch {
     display: block;
     margin: 0 auto; /* Esto centrará la imagen horizontalmente */
-    
-}
-
-.merch :hover{
     
 }
