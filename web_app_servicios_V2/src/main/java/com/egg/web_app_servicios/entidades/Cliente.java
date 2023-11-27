@@ -33,11 +33,22 @@ public class Cliente {
     @OneToOne                           
     private Imagen imagen;
     
+    @OneToOne
+    private Valoracion valoracion;
+    
     @Enumerated(EnumType.STRING)
     private Rol rol= Rol.USER;
     
 
     public Cliente() {
+    }
+
+    public Valoracion getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(Valoracion valoracion) {
+        this.valoracion = valoracion;
     }
 
     public String getEmail() {

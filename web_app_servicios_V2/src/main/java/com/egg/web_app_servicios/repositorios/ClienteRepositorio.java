@@ -18,5 +18,8 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, String> {
     public List<Cliente> buscarPorNombre(@Param("nombre")String nombre);
 
     @Query("SELECT e FROM Cliente e WHERE e.email = :email")
-    public List<Cliente> buscarPorEmail(@Param("email")String email);
+    public List<Cliente> findByEmail(@Param("email")String email);
+    
+    public boolean existsByEmail(String email);
+    
 }

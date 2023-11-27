@@ -82,6 +82,23 @@ public class ClienteService implements UserDetailsService {
         }       
     }
     
+    
+    public void eliminarClientePorEmail(String email) throws MiException {
+    // Buscar el cliente por su email
+    List<Cliente> clientes = clienteRepositorio.findByEmail(email);
+
+    if (!clientes.isEmpty()) {
+        // Si se encontraron clientes con ese email, eliminar el primero (o manejar según tus necesidades)
+        Cliente cliente = clientes.get(0);
+        clienteRepositorio.delete(cliente);
+    } else {
+        // Si la lista está vacía, el cliente no existe, lanzar una excepción o manejar de acuerdo a tus necesidades
+        throw new MiException("Cliente con email " + email + " no encontrado");
+    }
+
+}
+    
+    
     public void validar (String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
         
         if (nombre.isEmpty() || nombre == null) {
@@ -112,6 +129,10 @@ public class ClienteService implements UserDetailsService {
         if (!password.equals(password2)) {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
+        if (clienteRepositorio.existsByEmail(email)) {
+        throw new MiException("El correo electrónico ya está registrado.");
+    }
+        
     }
     
  
