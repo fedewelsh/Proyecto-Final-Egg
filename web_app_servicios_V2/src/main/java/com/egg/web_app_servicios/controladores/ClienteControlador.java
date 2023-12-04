@@ -57,7 +57,7 @@ public String registro(@RequestParam String nombre,
         System.out.println("nombre: " + nombre + "password: " + password + "direccion: " + direccion + "barrio: " + barrio + "email: " + email);
         
         try {
-            clienteService.crearUsuario(nombre, telefono, email, barrio, direccion, password, password2);
+            clienteService.crearCliente(email, nombre, telefono, email, barrio, direccion, password, password2);
             modelo.put("exito", "El usuario fue cargado correctamente");
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());

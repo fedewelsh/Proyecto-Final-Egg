@@ -9,22 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
-
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SeguridadWeb {
-
+@EnableMethodSecurity(prePostEnabled = true)
+public class SeguridadWeb{
      @Autowired
-    public ClienteService usuarioService;
-    
+    public ClienteService usuarioService;   
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(usuarioService)
@@ -48,14 +48,12 @@ public class SeguridadWeb {
 			)
 			.logout((logout) -> logout
                                 .logoutUrl("/logout")
-                                .logoutSuccessUrl("/login")
+                                .logoutSuccessUrl("/")
                                 .permitAll())                   
                         .csrf()
                         .disable();
-
 		return http.build() ;
-	}
-        
+	}     
         
         
 }

@@ -20,7 +20,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             <form id="form_48915" class="appnitro" enctype="multipart/form-data" method="POST" action="/proveedor/registro">
                 <div class="form_description">
                     <h2>REGISTRAR PROVEEDOR</h2>
-                    
+
                     <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
                         <div class="card-body">
                             <h5 class="card-title">ERROR 👎</h5>
@@ -51,7 +51,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         </div>
                     </li>
                     <li id="li_3">
-                        
+
                     </li>
 
                     <li id="li_4">
@@ -63,21 +63,26 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                         <div class="phone-input">
                             <input type="text" id="caracteristica" name="telefono" placeholder="Telefono sin el 0, 15 o -" required />
                         </div>
-                      
+
                     </li>
-                  <select id="opciones" name="tipo_servicio">
+                    <select id="opciones" name="tipo_servicio">
                         <option style="color: gray" value="opcion1">Servicio que ofrece</option>
-                        <option value="BPlomería">Plomería</option>
+                        <option value="Plomero">Plomería</option>
                         <option value="Gasista">Gasista</option>
-                        <option value="Albañilería">Albañilería</option>
-                    <option value="Cerrajería">Cerrajería</option>
-                    <option value="Carpintería">Carpintería</option>
-                    <option value="Electricista">Electricista</option>
+                        <option value="Albañil">Albañilería</option>
+                        <option value="Cerrajero">Cerrajería</option>
+                        <option value="Carpintero">Carpintería</option>
+                        <option value="Electricista">Electricista</option>
                     </select>
-                  
-       
-        
-        
+
+                    <li id="li_5">	
+                        <div class="phone-input">
+                            <input type="text" id="caracteristica" name="descripcion" placeholder="Descripcion" required />
+                        </div>
+
+                    </li>
+
+
                     <li id="li_6">
                         <label class="description" for="element_6">Cargar Imagen </label>
                         <div>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .perfil-container {
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .perfil-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        .descripcion {
+            margin-top: 10px;
+        }
+
+        .barrio, .direccion, .email, .telefono {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .boton {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-top: 20px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .eliminar {
+            background-color: #ff5722; /* naranja oscuro */
+        }
+
+        .modificar {
+            background-color: #ff9800; /* naranja */
+            margin-left: 10px;
+        }
+
+        .cambiar-contrasena {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+<div class="perfil-container" th:if="${datosusuario != null}" th:object="${datosusuario}">
+    <img class="perfil-image" src="ruta-de-la-imagen.jpg" alt="Mi Foto de Perfil">
+    <h2 th:text="${datosusuario.nombre}"></h2>
+<!--    <p class="email" th:text="${datosusuario.email}">Correo electrónico: correo@example.com</p>
+    <p class="telefono" th:text="${datosusuario.telefono}">Teléfono: +123456789</p>
+    <p class="barrio" th:text="${datosusuario.barrio != null ? datosusuario.barrio : 'N/A'}">Barrio: Mi Barrio</p>
+    <p class="direccion" th:text="${datosusuario.direccion}">Dirección: Calle Principal, #123</p>
+    <p class="descripcion" th:text="${datosusuario.descripcion}">Esta es una breve descripción sobre mí.</p>-->
+
+     Agrega enlaces, botones u otros elementos según tus necesidades 
+    <a href="#" class="boton eliminar">Eliminar perfil</a>
+    <a href="#" class="boton modificar">Modificar perfil</a>
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="perfil-container" th:object="${cliente}">
+    <img class="perfil-image" src="ruta-de-la-imagen.jpg" alt="Mi Foto de Perfil">
+    <h2>Mi Nombre</h2>
+    <p class="descripcion" th:text="${cliente != null} ? ${cliente.nombre} : ''"></p>
+    <p class="direccion" th:text="${cliente != null} ? ${cliente.direccion} : ''"></p>
+    <p class="barrio" th:text="${cliente != null} ? ${cliente.barrio} : ''"></p>
+    <p class="email" th:if="${cliente != null}" th:text="${cliente.email}"></p>
+    <p class="telefono" th:text="${cliente != null} ? ${cliente.telefono} : ''"></p>
+    <a href="#" class="boton eliminar">Eliminar perfil</a>
+    <a href="#" class="boton modificar">Modificar perfil</a>
+</div>-->
+
+<!--<div th:if="${cliente != null}" class="perfil-container" th:object="${cliente}">
+    <img class="perfil-image" th:src="@{'ruta-de-la-imagen.jpg'}" alt="Mi Foto de Perfil">
+    <h2>Mi Nombre</h2>
+    <p class="descripcion" th:text="${cliente != null} ? ${cliente.nombre} : ''"></p>
+    <p class="direccion" th:text="${cliente != null} ? ${cliente.direccion} : ''"></p>
+    <p class="barrio" th:text="${cliente != null} ? ${cliente.barrio} : ''"></p>
+    <p class="email" th:text="${cliente != null}? ${cliente.email}"></p>
+    <p class="telefono" th:text="${cliente != null} ? ${cliente.telefono} : ''"></p>
+    <a href="/eliminar-perfil" class="boton eliminar">Eliminar perfil</a>
+    <a href="/modificar-perfil" class="boton modificar">Modificar perfil</a>
+</div>-->

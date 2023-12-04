@@ -12,51 +12,32 @@ import jakarta.persistence.Enumerated;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
+
 @Entity
-public class Cliente {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Cliente extends Usuario {
     
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator (name="uuid", strategy = "uuid2")
-    private String id;    
-    private String nombre;
-    
-    private String telefono;
-    private String email;
+   
     private String barrio;
     private String direccion;
-    private String password;
-                                         
+    
     @OneToOne                           
     private Imagen imagen;
     
     @OneToOne
     private Valoracion valoracion;
-    
-    @Enumerated(EnumType.STRING)
-    private Rol rol= Rol.USER;
-    
+  
+    @OneToOne
+    @JoinColumn(name = "usuario_id") // ajusta esto según tu esquema de base de datos
+    private Usuario usuario;
 
     public Cliente() {
-    }
-
-    public Valoracion getValoracion() {
-        return valoracion;
-    }
-
-    public void setValoracion(Valoracion valoracion) {
-        this.valoracion = valoracion;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getBarrio() {
@@ -67,55 +48,12 @@ public class Cliente {
         this.barrio = barrio;
     }
 
-    
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
-    
-    
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
     public String getDireccion() {
         return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Imagen getImagen() {
@@ -126,6 +64,28 @@ public class Cliente {
         this.imagen = imagen;
     }
 
+    public Valoracion getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(Valoracion valoracion) {
+        this.valoracion = valoracion;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
     
+   
+
+    
+   
+    
+    
+   
     
 }

@@ -10,6 +10,9 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
 
 
 import jakarta.persistence.OneToOne;
@@ -17,82 +20,25 @@ import jakarta.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
-public class Proveedor {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Proveedor extends Usuario{
     
-    @Id
-    @GeneratedValue(generator= "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2") 
-    private String id;
     
-    private String nombre;
-    
-    private String telefono;
-    private String email;
-    private String password;    
     
     private String tipo_servicio;
+    private String descripcion;
     
     @OneToOne 
     private Valoracion valoracion;
 
     @OneToOne
     private Imagen imagen;
-    
-    @Enumerated(EnumType.STRING)
-    private Rol rol= Rol.USER;
+      
+    @OneToOne
+    @JoinColumn(name = "usuario_id") // ajusta esto según tu esquema de base de datos
+    private Usuario usuario;
 
-    
     public Proveedor() {
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-    
-    
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getTipo_servicio() {
@@ -103,7 +49,13 @@ public class Proveedor {
         this.tipo_servicio = tipo_servicio;
     }
 
-   
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
     public Valoracion getValoracion() {
         return valoracion;
@@ -120,6 +72,16 @@ public class Proveedor {
     public void setImagen(Imagen imagen) {
         this.imagen = imagen;
     }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+   
     
     
     

@@ -6,6 +6,7 @@ package com.egg.web_app_servicios.service;
 
 
 import com.egg.web_app_servicios.entidades.Cliente;
+import com.egg.web_app_servicios.entidades.Usuario;
 import com.egg.web_app_servicios.enumeraciones.Rol;
 import com.egg.web_app_servicios.excepciones.MiException;
 import java.util.ArrayList;
@@ -20,6 +21,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.egg.web_app_servicios.repositorios.ClienteRepositorio;
+import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 
 @Service
@@ -28,30 +36,33 @@ public class ClienteService implements UserDetailsService {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
     
+    
+    
     @Autowired
-    private ImagenService imagenService;
+    private UsuarioService usuarioService;
+    
+   
     
     @Transactional
-    public void crearUsuario(String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
+    public void crearCliente(String id, String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
+        
+        
         
         validar(nombre, telefono, email, barrio, direccion, password, password2);
-        Cliente usuario = new Cliente();
         
-        usuario.setNombre(nombre);
-        usuario.setTelefono(telefono);
-        usuario.setEmail(email);
-        usuario.setDireccion(direccion);
-        usuario.setBarrio(barrio);
         
-        usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-
-        usuario.setRol(Rol.USER);
+        Cliente cliente = new Cliente();
         
-        //Imagen imagen = imagenService.guardar(archivo);
-
-        //usuario.setImagen(imagen);
+        cliente.setId(id);
+        cliente.setNombre(nombre);
+        cliente.setEmail(email);
+        cliente.setTelefono(telefono);
+        cliente.setDireccion(direccion);
+        cliente.setBarrio(barrio);
+        cliente.setPassword(password);
+        cliente.setRol(Rol.USER);
         
-        clienteRepositorio.save(usuario);
+        clienteRepositorio.save(cliente);
     }
     
     public List<Cliente> listarUsuario(){
@@ -63,6 +74,7 @@ public class ClienteService implements UserDetailsService {
         return usuarios;
     }
     
+    @Transactional
     public void modificarUsuario(String id, String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
         
         validar(nombre, telefono, email, barrio, direccion, password, password2);
@@ -70,22 +82,25 @@ public class ClienteService implements UserDetailsService {
          
         if(respuesta.isPresent()){
             
-            Cliente usuario = respuesta.get();
-            
-            usuario.setNombre(nombre);
-            usuario.setTelefono(telefono);
-            usuario.setEmail(email);
-            usuario.setBarrio(barrio);
-            usuario.setDireccion(direccion);
-            usuario.setPassword(password);
-            clienteRepositorio.save(usuario);
+        Cliente cliente = new Cliente();
+        
+        cliente.setId(id);
+        cliente.setNombre(nombre);
+        cliente.setEmail(email);
+        cliente.setTelefono(telefono);
+        cliente.setDireccion(direccion);
+        cliente.setBarrio(barrio);
+        cliente.setPassword(password);
+        
+        
+        clienteRepositorio.save(cliente);
         }       
     }
     
     
     public void eliminarClientePorEmail(String email) throws MiException {
     // Buscar el cliente por su email
-    List<Cliente> clientes = clienteRepositorio.findByEmail(email);
+    List<Cliente> clientes = clienteRepositorio.buscarPorEmail(email);
 
     if (!clientes.isEmpty()) {
         // Si se encontraron clientes con ese email, eliminar el primero (o manejar según tus necesidades)
@@ -101,18 +116,7 @@ public class ClienteService implements UserDetailsService {
     
     public void validar (String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
         
-        if (nombre.isEmpty() || nombre == null) {
-            throw new MiException("El nombre no puede ser nulo o estar vac�o");
-        }
-        if (telefono.isEmpty() || telefono == null) {
-            throw new MiException ("El telefono no puede ser nulo o estar vacio");
-        }else if (telefono.length() < 3) {
-            throw new MiException ("El telefono debe tenes mas de 9 digitos");
-        }
-        
-        if (email.isEmpty()|| email == null){
-            throw new MiException ("El email no puede ser nulo o estar vacio");
-        }
+       
         
         if (barrio.isEmpty() || barrio == null){
             throw new MiException ("El barrio no puede ser nulo o estar vacio");
@@ -121,24 +125,34 @@ public class ClienteService implements UserDetailsService {
         if (direccion.isEmpty() || direccion == null) {
              throw new MiException ("La direccion no puede ser nula o estar vacia");
         }
-        
-        if (password.isEmpty() || password == null || password.length() <= 5) {
-            throw new MiException("La contraseña no puede estar vacía, y debe tener más de 5 dígitos");
-        }
-
-        if (!password.equals(password2)) {
-            throw new MiException("Las contraseñas ingresadas deben ser iguales");
-        }
-        if (clienteRepositorio.existsByEmail(email)) {
-        throw new MiException("El correo electrónico ya está registrado.");
-    }
-        
+     
     }
     
  
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Cliente cliente = (Cliente) clienteRepositorio.buscarPorEmail(email);
+
+        if (cliente != null) {
+
+            List<GrantedAuthority> permisos = new ArrayList();
+
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + cliente.getRol().toString());
+
+            permisos.add(p);
+
+            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+
+            HttpSession session = attr.getRequest().getSession(true);
+
+            session.setAttribute("usuariosession", cliente);
+
+            return new User(cliente.getEmail(), cliente.getPassword(), permisos);
+        } else {
+            return null;
+        }
     }
+
     
     
 }

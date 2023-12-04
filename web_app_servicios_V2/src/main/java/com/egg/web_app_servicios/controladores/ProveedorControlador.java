@@ -43,13 +43,14 @@ public String registro(@RequestParam String nombre,
                        @RequestParam String password2,
                        @RequestParam String email, 
                        @RequestParam String telefono, 
-                       @RequestParam String tipo_servicio, 
+                       @RequestParam String tipo_servicio,
+                       String descripcion,
                        ModelMap modelo) {
     
         System.out.println("nombre: " + nombre + "password: " + password + "email: " + email + "telefono: " + telefono + "tipo servicio: " + tipo_servicio);
         
         try {
-            proveedorService.crearProveedor(nombre, telefono, email, password, password2, tipo_servicio);
+            proveedorService.crearProveedor(email, nombre, telefono, email, password, password2, tipo_servicio, descripcion);
             modelo.put("exito", "El proveedor fue cargado exitosamente");
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
@@ -63,6 +64,10 @@ public String registro(@RequestParam String nombre,
 public String listarPorTipoServicio(@RequestParam(name = "tipo_servicio", required = false) String tipo_servicio, ModelMap modelo) {
     List<Proveedor> proveedores;
 
+    if (tipo_servicio != null) {
+        tipo_servicio = tipo_servicio.trim(); // Aplicar trim al valor
+    }
+    
     if (tipo_servicio != null && !tipo_servicio.isEmpty()) {
         proveedores = proveedorService.listarProveedorPorTipoServicio(tipo_servicio);
         modelo.addAttribute("tipoServicioSeleccionado", tipo_servicio);
