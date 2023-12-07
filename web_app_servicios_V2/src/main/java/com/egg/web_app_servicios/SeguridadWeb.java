@@ -4,27 +4,38 @@
  */
 package com.egg.web_app_servicios;
 
-import com.egg.web_app_servicios.service.ClienteService;
+import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
+
+import com.egg.web_app_servicios.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+
+
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
+
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SeguridadWeb{
+    
      @Autowired
-    public ClienteService usuarioService;   
+    public UsuarioService usuarioService;  
+     
+      @Autowired
+    public UsuarioRepositorio usuarioRepositorio;  
+     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(usuarioService)
@@ -32,11 +43,12 @@ public class SeguridadWeb{
     }
 	@Bean
 	public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-		http
+		http.csrf().disable()
 			.authorizeHttpRequests((requests) -> requests
                                 .requestMatchers ("/admin/*").hasRole("ADMIN")
 				.requestMatchers("/css/*", "/js/*","/img/*","/**").permitAll()
 				.anyRequest().authenticated()
+                                                                     
 			)
 			.formLogin((form) -> form
 				.loginPage("/login")
@@ -49,11 +61,13 @@ public class SeguridadWeb{
 			.logout((logout) -> logout
                                 .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
-                                .permitAll())                   
-                        .csrf()
-                        .disable();
+                                .permitAll());                   
+                        
 		return http.build() ;
-	}     
+        }    
+              
+                
+
         
         
 }

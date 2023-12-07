@@ -15,7 +15,7 @@
 
         </header>
 
-        <form >
+        <form th:action="@{/logincheck}" method="POST">
             <label for="username">Nombre de Usuario:</label>
             <input type="text" id="username" name="username" required>
 
@@ -23,7 +23,7 @@
             <input type="password" id="password" name="password" required>
 
            
-                <button type="submit"><a href="../inicio">Iniciar Sesión</a></button>
+                <button type="submit" th:action="@{/inicio}" method="POST">Iniciar Sesión</button>
            
 
         </form>

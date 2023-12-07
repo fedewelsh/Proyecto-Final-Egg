@@ -7,6 +7,9 @@
         "redirigir(this)\"": {
             "context": "select"
         },
+        "th:action": {
+            "context": "form"
+        },
         "th:each": {
             "context": "tbody"
         }

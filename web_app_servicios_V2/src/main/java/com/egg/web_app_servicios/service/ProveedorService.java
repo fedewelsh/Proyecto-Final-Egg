@@ -22,20 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.egg.web_app_servicios.repositorios.ClienteRepositorio;
-import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
+
 
 @Service
-public class ProveedorService implements  UserDetailsService {
+public class ProveedorService{
     
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
@@ -52,17 +42,14 @@ public class ProveedorService implements  UserDetailsService {
         
         validar(nombre, telefono, email, tipo_servicio);
         
-       
+      Usuario usuario = usuarioService.crearUsuario(nombre, telefono, email, password, password2);
       Proveedor proveedor = new Proveedor();
         
-        proveedor.setId(id);
-        proveedor.setNombre(nombre);
-        proveedor.setTelefono(telefono);
-        proveedor.setEmail(email);
+        
         proveedor.setTipo_servicio(tipo_servicio);
         proveedor.setDescripcion(descripcion);
-        proveedor.setRol(Rol.USER);
-        proveedor.setPassword(password);
+        
+        proveedor.setUsuario(usuario);
         
         
         //Imagen imagen = imagenService.guardar(archivo);
@@ -100,16 +87,14 @@ public class ProveedorService implements  UserDetailsService {
    
               
         if(respuesta.isPresent()){
-           Proveedor proveedor = new Proveedor();
+         Usuario usuario = usuarioService.crearUsuario(nombre, telefono, email, password, password2);
+      Proveedor proveedor = new Proveedor();
         
-        proveedor.setId(id);
-        proveedor.setNombre(nombre);
-        proveedor.setTelefono(telefono);
-        proveedor.setEmail(email);
+        
         proveedor.setTipo_servicio(tipo_servicio);
         proveedor.setDescripcion(descripcion);
-        proveedor.setRol(Rol.USER);
-        proveedor.setPassword(password);
+        
+        proveedor.setUsuario(usuario);
         
         //Imagen imagen = imagenService.guardar(archivo);
 
@@ -131,27 +116,6 @@ public class ProveedorService implements  UserDetailsService {
     }
     
     
-     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Proveedor proveedor = (Proveedor) proveedorRepositorio.buscarPorEmail(email);
-
-        if (proveedor != null) {
-
-            List<GrantedAuthority> permisos = new ArrayList();
-
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_" + proveedor.getRol().toString());
-
-            permisos.add(p);
-
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("usuariosession", proveedor);
-
-            return new User(proveedor.getEmail(), proveedor.getPassword(), permisos);
-        } else {
-            return null;
-        }
-    }
+    
+    
 }

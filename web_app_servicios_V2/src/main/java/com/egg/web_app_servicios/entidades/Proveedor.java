@@ -4,38 +4,37 @@
  */
 package com.egg.web_app_servicios.entidades;
 
-import com.egg.web_app_servicios.enumeraciones.Rol;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 
 
 import jakarta.persistence.OneToOne;
-
 import org.hibernate.annotations.GenericGenerator;
 
+
+
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Proveedor extends Usuario{
+public class Proveedor{
     
     
-    
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator (name="uuid", strategy = "uuid2")
+    private String id;    
     private String tipo_servicio;
     private String descripcion;
     
     @OneToOne 
     private Valoracion valoracion;
 
-    @OneToOne
-    private Imagen imagen;
       
-    @OneToOne
-    @JoinColumn(name = "usuario_id") // ajusta esto según tu esquema de base de datos
+     @OneToOne
     private Usuario usuario;
 
     public Proveedor() {
@@ -63,14 +62,6 @@ public class Proveedor extends Usuario{
 
     public void setValoracion(Valoracion valoracion) {
         this.valoracion = valoracion;
-    }
-
-    public Imagen getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(Imagen imagen) {
-        this.imagen = imagen;
     }
 
     public Usuario getUsuario() {

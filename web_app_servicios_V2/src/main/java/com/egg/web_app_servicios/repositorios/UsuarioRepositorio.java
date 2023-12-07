@@ -12,11 +12,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
+    
     @Query("SELECT e FROM Usuario e WHERE e.email = :email")
     public Usuario buscarPorEmail(@Param("email")String email);
     
     public boolean existsByEmail(String email);
 }
 
-//@Query("SELECT p FROM Persona p WHERE (:nombre IS NULL OR p.nombre LIKE %:nombre%) AND(:edad IS NULL OR p.edad = :edad)")
-//    public List<Persona> findAllByNombreOrEdad(String nombre, Integer edad);

@@ -5,12 +5,19 @@
 package com.egg.web_app_servicios.entidades;
 
 import com.egg.web_app_servicios.enumeraciones.Rol;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -31,10 +38,10 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Rol rol;
     
-     @OneToOne(mappedBy = "usuario")
+    @OneToOne   
     private Cliente cliente;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne    
     private Proveedor proveedor;
 
     public Usuario() {

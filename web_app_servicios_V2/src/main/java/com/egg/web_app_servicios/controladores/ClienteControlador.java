@@ -6,8 +6,7 @@ package com.egg.web_app_servicios.controladores;
 
 import com.egg.web_app_servicios.excepciones.MiException;
 import com.egg.web_app_servicios.service.ClienteService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+
 
 
 @Controller
@@ -31,10 +30,7 @@ public class ClienteControlador {
     
    
         
-//    @GetMapping("/registrar")
-//    public String registrar(){
-//        return "usuario_formulario.html";
-//    }
+
     
     @GetMapping("/cliente_formulario")
     public String registrarUusario(){

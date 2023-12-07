@@ -14,12 +14,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ClienteRepositorio extends JpaRepository<Cliente, String> {
     
-    @Query("SELECT n FROM Cliente n WHERE n.nombre = :nombre")
-    public List<Cliente> buscarPorNombre(@Param("nombre")String nombre);
-
-    @Query("SELECT e FROM Cliente e WHERE e.email = :email")
-    public List<Cliente> buscarPorEmail(@Param("email")String email);
+//    @Query("SELECT n FROM Cliente n WHERE n.nombre = :nombre")
+//    public List<Cliente> buscarPorNombre(@Param("nombre")String nombre);
+//
+//    @Query("SELECT e FROM Cliente e WHERE e.email = :email")
+//    public List<Cliente> buscarPorEmail(@Param("email")String email);
     
-    public boolean existsByEmail(String email);
+   
     
 }

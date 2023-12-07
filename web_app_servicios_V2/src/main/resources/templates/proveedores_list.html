@@ -183,7 +183,7 @@
             </select>
         </div>
         <div class="dropm-down">
-            <select id="servicesDropdown " onchange="redirigir(this)">
+            <select id="servicesDropdown " onchange="redirigir(this)" >
                 <option value="#" selected disabled>Servicios</option>
                 <option value="/proveedor/proveedores_list?tipo_servicio=Plomero">Plomería</option>
                 <option value="/proveedor/proveedores_list?tipo_servicio=Gasista">Gasista</option>
@@ -206,11 +206,11 @@
             <div class="review-info-container">
                 <img class="review-image" src="../img/man.PNG" alt="Imagen de la persona 1">
                 <div class="review-info">
-                    <h2 th:text="${proveedor.nombre}"></h2>
+                    <h2 th:text="${proveedor.usuario.nombre}"></h2>
                     <h4 th:text="${proveedor.tipo_servicio}"></h4>
                     <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div> <!-- Cinco estrellas -->
-                    <p th:text="'Correo electrónico: ' +${proveedor.email}"></p>
-                    <p th:text="'Teléfono: ' +${proveedor.telefono}"></p>
+                    <p th:text="'Correo electrónico: ' +${proveedor.usuario.email}"></p>
+                    <p th:text="'Teléfono: ' +${proveedor.usuario.telefono}"></p>
                     <p th:text="'Descripcion: ' +${proveedor.descripcion}"></p>
                 </div>
             </div>

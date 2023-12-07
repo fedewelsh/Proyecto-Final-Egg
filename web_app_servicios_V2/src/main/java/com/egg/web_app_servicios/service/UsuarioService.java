@@ -11,6 +11,7 @@ import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -48,8 +49,10 @@ public class UsuarioService implements  UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        
+       
         Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
-
+        
         if (usuario != null) {
 
             List<GrantedAuthority> permisos = new ArrayList();
@@ -66,7 +69,7 @@ public class UsuarioService implements  UserDetailsService {
 
             return new User(usuario.getEmail(), usuario.getPassword(), permisos);
         } else {
-            return null;
+            throw new UsernameNotFoundException("Usuario no encontrado con email: " + email);
         }
     }
     
@@ -97,6 +100,21 @@ public class UsuarioService implements  UserDetailsService {
         throw new MiException("El correo electrónico ya está registrado.");
     }
         
+    }
+     
+     
+     public Usuario getOne(String id){
+        return usuarioRepositorio.getOne(id);
+    }
+    
+    @Transactional(readOnly=true)
+    public List<Usuario> listarUsuarios() {
+
+        List<Usuario> usuarios = new ArrayList();
+
+        usuarios = usuarioRepositorio.findAll();
+
+        return usuarios;
     }
     
 }
