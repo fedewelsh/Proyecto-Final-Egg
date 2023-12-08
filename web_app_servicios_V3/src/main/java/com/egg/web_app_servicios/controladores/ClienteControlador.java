@@ -9,6 +9,7 @@ package com.egg.web_app_servicios.controladores;
 import com.egg.web_app_servicios.excepciones.MiException;
 
 import com.egg.web_app_servicios.service.ClienteService;
+import com.egg.web_app_servicios.service.UsuarioService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +36,9 @@ public class ClienteControlador {
     
     @Autowired
     private ClienteService clienteService;
+    
+    @Autowired
+    private UsuarioService usuarioService;
     
 
     
@@ -73,7 +78,31 @@ public String registro(@RequestParam String nombre,
     return "index.html";
 }
     
- 
+ @PostMapping("/modificar_cliente/{id}")
+public String ClienteModificar(@PathVariable String id, 
+                        @RequestParam String nombre, 
+                       @RequestParam String password, 
+                       @RequestParam String password2,
+                       @RequestParam String direccion, 
+                       @RequestParam String barrio, 
+                       @RequestParam String email, 
+                       @RequestParam String telefono,
+                       ModelMap modelo,
+                       MultipartFile archivo) {
+    
+       
+        
+        try {
+//            usuarioService.modificarUsuario(id, archivo, nombre, telefono, email, password, password2);
+            clienteService.modificarCliente(id, archivo, nombre, telefono, email, barrio, direccion, password, password2);
+            modelo.put("exito", "El usuario fue cargado correctamente");
+        } catch (MiException ex) {
+            modelo.put("error", ex.getMessage());
+            return "usuario_modificar.html";
+        }
+        
+    return "index.html";
+}
  
 
 

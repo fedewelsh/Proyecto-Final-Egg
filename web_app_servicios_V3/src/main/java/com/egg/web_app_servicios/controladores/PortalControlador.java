@@ -48,6 +48,7 @@ public class PortalControlador {
    
    @Autowired
    private UsuarioService usuarioService;
+   private ClienteService clienteService;
 
     
     @GetMapping("/")
@@ -76,22 +77,43 @@ public class PortalControlador {
     @GetMapping("/inicio")
     public String mostrarPaginaInicioCliente(HttpSession session) {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-        System.out.println("logueado: " + logueado);
-
+                
+        if(logueado.getRol().toString().equals("ADMIN")){
+            System.out.println("ADMIN: " + logueado);
+            return "redirect:/admin/dashboard";
+        }
        
         return "inicio.html";
     }
  
     
     @GetMapping("/perfil")
-    public String mostrarPerfilCliente(ModelMap modelo, HttpSession session) {
+    public String mostrarPerfilCliente(ModelMap model, HttpSession session) {
     Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-    modelo.addAttribute("usuariosession", logueado);
+    
+    
     return "perfil.html";
 }
   
-
-
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/modificar")
+    public String modificarUsuarioLogueado(HttpSession session) {
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        
+        return "usuario_modificar.html";
+    }
+    
+    
+    
+    
+    
+//    @GetMapping("/modificar/{id}")
+//    public String modificar(@PathVariable String id, ModelMap modelo){
+//            
+//            modelo.put("usuario", usuarioService.getOne(id));
+// 
+//    return "formulario_modificar.html";
+//    }
 }
 
 

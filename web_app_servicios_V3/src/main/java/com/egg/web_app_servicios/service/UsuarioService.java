@@ -4,15 +4,20 @@
  */
 package com.egg.web_app_servicios.service;
 
+import com.egg.web_app_servicios.entidades.Cliente;
 import com.egg.web_app_servicios.entidades.Imagen;
+import com.egg.web_app_servicios.entidades.Proveedor;
 import com.egg.web_app_servicios.entidades.Usuario;
 import com.egg.web_app_servicios.enumeraciones.Rol;
 import com.egg.web_app_servicios.excepciones.MiException;
+import com.egg.web_app_servicios.repositorios.ClienteRepositorio;
 import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
+import static org.hibernate.criterion.Projections.id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,6 +41,9 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private ImagenService imagenService;
     
+    @Autowired
+    private ClienteRepositorio clienteRepositorio;
+    
     @Transactional
     public Usuario crearUsuario(MultipartFile archivo, String nombre, String telefono, String email, String password, String pasword2)throws MiException {
         
@@ -56,13 +64,13 @@ public class UsuarioService implements UserDetailsService {
     }
 
     @Transactional
-    public Usuario modificarUsuario(MultipartFile archivo, String nombre, String telefono, String email, String password, String pasword2) throws MiException{
+    public Usuario modificarUsuario(String id, MultipartFile archivo, String nombre, String telefono, String email, String password, String pasword2) throws MiException{
         
         validar(nombre, telefono, email, password, password);
-        Usuario respuesta = usuarioRepositorio.buscarPorEmail(email);
-         Usuario usuario = new Usuario();
-        if(respuesta != null){
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         
+        if(respuesta != null){
+        Usuario usuario = respuesta.get();
         usuario.setNombre(nombre);
         usuario.setTelefono(telefono);
         usuario.setEmail(email);
@@ -77,9 +85,14 @@ public class UsuarioService implements UserDetailsService {
         
         usuario.setImagen(imagen);
        
+         
+        
         usuarioRepositorio.save(usuario);
-        } 
         return usuario;
+        } else{
+            throw new MiException("No se encontró un usuario con el ID proporcionado: " + id);
+        }
+        
     }
 
   
@@ -148,5 +161,16 @@ public class UsuarioService implements UserDetailsService {
     }
         
     }
+    
+     public byte[] obtenerImagenDeUsuario(String usuarioId) throws MiException {
+        Usuario usuario = usuarioRepositorio.getOne(usuarioId);
+
+        if (usuario != null && usuario.getImagen() != null) {
+            return usuario.getImagen().getContenido();
+        } else {
+            throw new MiException("No se pudo encontrar la imagen del usuario con ID: " + usuarioId);
+        }
+    }
+
     
 }

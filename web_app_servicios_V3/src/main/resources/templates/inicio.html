@@ -17,9 +17,9 @@
             <div class="portada">
                 <h1>Profesionales <br />de confianza</h1>
                 <p>133.392 trabajos hechos con serviX</p>
-                <p class="tituloLibros" th:if="${session.usuariosession != null}" ><span th:text="'Bienvenido ' + ${session.usuariosession.nombre}"></span></p>
+                <p class="bienvenido" th:if="${session.usuariosession != null}" ><span th:text="'Bienvenido ' + ${session.usuariosession.nombre}"></span></p>
                 <a th:if="${session.usuariosession.imagen != null}" class="d-flex align-items-center">
-                    <img class="logo"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" >
+                    <img class="foto"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" >
                 </a>
             </div>
                     
@@ -68,8 +68,8 @@
                 <select id="registerDropdown" onchange="redirigir(this)">
                     <option value="#" selected disabled>Servicios</option>
                     <option value="/proveedor/proveedores_list?tipo_servicio=plomero">Plomería</option>
-                    <option value="/proveedor/proveedores_list?tipo_servicio=carpintero">Carpintería</option>
                     <option value="/proveedor/proveedores_list?tipo_servicio=gasista">Gasista</option>
+                    <option value="/proveedor/proveedores_list?tipo_servicio=carpintero">Carpintería</option>                    
                     <option value="/proveedor/proveedores_list?tipo_servicio=electricista">Electricista</option>
                     <option value="/proveedor/proveedores_list?tipo_servicio=albañil">Albañil</option>
                     Add more options as needed 
@@ -156,5 +156,7 @@
             }
         }
     </script>
+    
+    
 
 </html>

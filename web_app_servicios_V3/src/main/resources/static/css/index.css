@@ -193,5 +193,20 @@ section{
 .merch {
     display: block;
     margin: 0 auto; /* Esto centrará la imagen horizontalmente */
+}   
+ 
+.bienvenido{
+        font-size: 24px; /* Tamaño de fuente más grande */
+        color: #333;    /* Color oscuro */
+        font-weight: bold; /* Texto en negrita */
+    }
     
-}
+    .foto{
+        width: 150px; /* Ancho de la imagen más grande */
+        height: 150px; /* Altura de la imagen más grande */
+       display: block; 
+        margin: 0 auto;
+    }
+    
+    
+

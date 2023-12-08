@@ -168,29 +168,34 @@
         .dropdown img {
             margin-right: 20px;
         }
+        
+        .foto{
+        width: 230px; /* Ancho de la imagen más grande */
+        height: 200px; /* Altura de la imagen más grande */
+        display: block; 
+        margin: 0 auto;
+        border: 2px solid black;
+        }
+        
     </style>
 </head>
 
 <body>
     <nav>
-        <a href="../login">Ingresar</a>
+        <a href="/inicio">Volver</a>
 
-        <div class="dropdown">
-            <select id="registerDropdown" onchange="redirigir(this)">
-                <option value="#" selected disabled>Registrarse</option>
-                <option value="/cliente/cliente_formulario">Cliente</option>
-                <option value="/proveedor/proveedor_formulario">Proveedor</option>
-            </select>
-        </div>
+
         <div class="dropm-down">
             <select id="servicesDropdown " onchange="redirigir(this)">
                 <option value="#" selected disabled>Servicios</option>
                 <option value="/proveedor/proveedores_list?tipo_servicio=Plomero">Plomería</option>
                 <option value="/proveedor/proveedores_list?tipo_servicio=Gasista">Gasista</option>
                 <option value="/proveedor/proveedores_list?tipo_servicio=Carpintero">Carpintería</option>
-                <option value="/proveedor/proveedores_list?tipo_servicio=Cerrajería">Cerrajero</option>
+                
                 <option value="/proveedor/proveedores_list?tipo_servicio=Electricista">Electricista</option>
+                
                 <option value="#albanil">Albañilería</option>
+                <option value="/proveedor/proveedores_list?tipo_servicio=Cerrajería">Cerrajero</option>
                 <!-- Add more options as needed -->
             </select>
         </div>
@@ -204,7 +209,7 @@
 
         <div class="review-container">
             <div class="review-info-container">
-                <img src=th:img="${proveedor.usuario.imagen}" alt="Foto proveedor">
+                <img class="foto" th:src="@{/imagen/foto/__${proveedor.usuario.id}__}" alt="Foto proveedor">
                 <div class="review-info">
                     <h2 th:text="${proveedor.usuario.nombre}"></h2>
                     <h4 th:text="${proveedor.tipo_servicio}"></h4>

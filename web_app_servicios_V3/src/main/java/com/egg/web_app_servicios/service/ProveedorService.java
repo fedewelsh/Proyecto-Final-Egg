@@ -15,6 +15,7 @@ import com.egg.web_app_servicios.enumeraciones.Rol;
 
 import com.egg.web_app_servicios.excepciones.MiException;
 import com.egg.web_app_servicios.repositorios.ProveedorRepositorio;
+import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
 
 
 import java.util.ArrayList;
@@ -37,6 +38,9 @@ public class ProveedorService {
     
     @Autowired
     private ValidacionEmailService validacionEmailService;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
     
     @Autowired
     private UsuarioService usuarioService;
@@ -79,41 +83,25 @@ public class ProveedorService {
 
         return proveedores;
     }
-     
-    
     
     @Transactional
-    public void modificarProveedor(MultipartFile archivo, String nombre, String telefono, String email, String tipo_servicio, String descripcion, String password, String password2) throws MiException{
+    public void modificarProveedor(String id, MultipartFile archivo, String nombre, String telefono, String email, String tipo_servicio, String descripcion, String password, String password2) throws MiException{
         
-        validar(nombre, telefono, email, tipo_servicio);
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(email);
-   
-              
-        if(respuesta.isPresent()){
-           Proveedor proveedor = new Proveedor();
+         validar(nombre, telefono, email, tipo_servicio);
         
-     
-        proveedor.setNombre(nombre);
-        proveedor.setTelefono(telefono);
-        proveedor.setEmail(email);
+        Usuario respuesta = usuarioRepositorio.getOne(id);
+        
+        if(respuesta != null){
+        Proveedor proveedor =respuesta.getProveedor();
+        Usuario usuario = usuarioService.modificarUsuario(id, archivo, nombre, telefono, email, password, password2);
         proveedor.setTipo_servicio(tipo_servicio);
         proveedor.setDescripcion(descripcion);
-        proveedor.setRol(Rol.USER);
-        proveedor.setPassword(password);
-        
-//        String idImagen = null;
-//                
-//                if(proveedor.getImagen() != null){
-//                    idImagen = proveedor.getImagen().getId();
-//                }
-//               
-//        Imagen imagen = imagenService.actualizar(archivo, idImagen);
-//        
-//        proveedor.setImagen(imagen);
-               
+        proveedor.setUsuario(usuario);
+       
+       
         proveedorRepositorio.save(proveedor);
         }
-    }  
+    } 
     
     private void validar(String nombre, String telefono, String email, String tipo_servicio) throws MiException{
         

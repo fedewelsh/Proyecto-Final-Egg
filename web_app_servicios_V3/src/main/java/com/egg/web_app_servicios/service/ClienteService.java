@@ -20,6 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.egg.web_app_servicios.repositorios.ClienteRepositorio;
+import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
+import java.util.Optional;
+
 
 
 
@@ -35,6 +38,8 @@ public class ClienteService{
     @Autowired
     private ValidacionEmailService validacionEmailService;
     
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
     
     @Autowired
     private UsuarioService usuarioService;
@@ -65,20 +70,23 @@ public class ClienteService{
     }
     
     @Transactional
-    public void modificarUsuario(MultipartFile archivo, String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
+    public void modificarCliente(String id, MultipartFile archivo, String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
+               
+        validar(nombre, telefono, email, barrio, direccion, password, password2);
         
-        Usuario usuario = usuarioService.modificarUsuario(archivo, nombre, telefono, email, password, password2);
+        Usuario respuesta = usuarioRepositorio.getOne(id);
         
-        Cliente cliente = new Cliente();
+        if(respuesta != null){
+        Cliente cliente =respuesta.getCliente();
+        Usuario usuario = usuarioService.modificarUsuario(id, archivo, nombre, telefono, email, password, password2);
+        cliente.setBarrio(barrio);
+        cliente.setDireccion(direccion);
+        cliente.setUsuario(usuario);
         
        
-        cliente.setDireccion(direccion);
-        cliente.setBarrio(barrio);
-        
-        cliente.setUsuario(usuario);       
         clienteRepositorio.save(cliente);
-        }       
-    
+        }
+    }
     
     
     public void eliminarClientePorEmail(String email) throws MiException {
@@ -128,6 +136,8 @@ public class ClienteService{
     public Cliente obtenerPorEmailCliente(String email) {
         return clienteRepositorio.buscarPorEmailCliente(email);
     }
+
+   
     
     
 }

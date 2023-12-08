@@ -17,6 +17,10 @@
             <div class="portada">
                 <h1>Profesionales <br />de confianza</h1>
                 <p>133.392 trabajos hechos con serviX</p>
+                <p class="tituloLibros" th:if="${session.usuariosession != null}" ><span th:text="'Bienvenido Administrador: ' + ${session.usuariosession.nombre}"></span></p>
+                <a th:if="${session.usuariosession.imagen != null}" class="d-flex align-items-center">
+                    <img class="logo"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" >
+                </a>
             </div>
             <div class="carousel-container">
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
