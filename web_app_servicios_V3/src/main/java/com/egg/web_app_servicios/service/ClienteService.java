@@ -6,6 +6,7 @@ package com.egg.web_app_servicios.service;
 
 
 import com.egg.web_app_servicios.entidades.Cliente;
+import com.egg.web_app_servicios.entidades.Imagen;
 
 import com.egg.web_app_servicios.entidades.Usuario;
 
@@ -43,6 +44,9 @@ public class ClienteService{
     
     @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private ImagenService imagenService;
    
     @Transactional
     public void crearCliente(MultipartFile archivo, String nombre, String telefono, String email, String barrio, String direccion, String password, String password2) throws MiException{
@@ -137,7 +141,20 @@ public class ClienteService{
         return clienteRepositorio.buscarPorEmailCliente(email);
     }
 
-   
+    @Transactional
+    public void eliminarCliente(String id, MultipartFile archivo) throws MiException{
+        
+        Usuario respuesta = usuarioRepositorio.getOne(id);
+        
+        if(respuesta != null){
+        Cliente cliente =respuesta.getCliente();
+        Usuario usuario = usuarioService.eliminarUsuario(id, archivo);
+            byte[] imagen = usuarioService.obtenerImagenDeUsuario(id);
+        imagenService.eliminar(archivo, id);
+       
+        clienteRepositorio.delete(cliente);
+        }
+    }
     
     
 }

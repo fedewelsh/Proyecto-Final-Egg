@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -75,7 +78,7 @@ public String registro(@RequestParam String nombre,
         
     return "index.html";
 }
-    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+   @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/proveedores_list")
 public String listarPorTipoServicio(@RequestParam(name = "tipo_servicio", required = false) String tipo_servicio, ModelMap modelo, MultipartFile imagen) {
     List<Proveedor> proveedores;
@@ -96,8 +99,15 @@ public String listarPorTipoServicio(@RequestParam(name = "tipo_servicio", requir
 
     modelo.addAttribute("proveedores", proveedores);
    
-    
-    return "proveedores_list.html";
+    // Verificar el rol del usuario autenticado
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    boolean isAdmin = authentication.getAuthorities().stream()
+            .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+    if (isAdmin) {
+        return "panel.html"; // Cambia el nombre según tu estructura
+    } else {
+        return "inicio.html"; // Cambia el nombre según tu estructura
+    }
 }
 
 @PostMapping("/modificar_proveedor/{id}")
@@ -118,12 +128,38 @@ public String ProveedorModificar(@PathVariable String id,
 //            usuarioService.modificarUsuario(id, archivo, nombre, telefono, email, password, password2);
             proveedorService.modificarProveedor(id, archivo, nombre, telefono, email, tipo_servicio, descripcion, password, password2);
             modelo.put("exito", "El proveedor fue cargado exitosamente");
+            return "redirect:/";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             return "usuario_modificar.html";
         }
         
-    return "index.html";
+    
+}
+
+
+@GetMapping("/eliminar_proveedor/{id}")
+public String ProveedorEliminar(@PathVariable String id,
+                                MultipartFile archivo,
+                                ModelMap modelo) {                     
+
+        try {
+            proveedorService.eliminarProveedor(id, archivo);
+            modelo.put("exito", "Proveedor eliminado");
+            return "redirect:/";
+        } catch (MiException ex) {
+            modelo.put("error", ex.getMessage());
+            return "inicio.html";
+        }
+        
+    
+}
+
+@GetMapping("/todos_proveedores")
+public String listarTodosLosProveedores(Model modelo) {
+    List<Proveedor> proveedores = proveedorService.listarProveedor();
+    modelo.addAttribute("proveedores", proveedores);
+    return "panel.html"; // Cambia el nombre de la vista según tu estructura de carpetas
 }
 
 

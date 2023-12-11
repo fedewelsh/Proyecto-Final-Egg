@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ImagenService {
+    
     @Autowired
     private ImagenRepositorio imagenRepositorio;
     
@@ -78,4 +79,29 @@ public class ImagenService {
 		return imagenRepositorio.findAll();
 	}
     
+        
+         public Imagen eliminar(MultipartFile archivo, String idImagen) throws MiException{
+         if (archivo != null) {
+            try {
+                
+                Imagen imagen = new Imagen();
+                
+                if (idImagen != null) {
+                    Optional<Imagen> respuesta = imagenRepositorio.findById(idImagen);
+                    
+                    if (respuesta.isPresent()) {
+                        imagen = respuesta.get();
+                    }
+                }
+                imagenRepositorio.delete(imagen);
+                
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return null;
+        
+    }
+        
+        
 }

@@ -137,4 +137,22 @@ public class ProveedorService {
         return proveedorRepositorio.buscarPorEmailProveedor(email);
     }
     
+    
+    @Transactional
+    public void eliminarProveedor(String id, MultipartFile archivo) throws MiException{
+        
+        
+        
+        Usuario respuesta = usuarioRepositorio.getOne(id);
+        
+        if(respuesta != null){
+        Proveedor proveedor =respuesta.getProveedor();
+        Usuario usuario = usuarioService.eliminarUsuario(id, archivo);
+              
+       
+        proveedorRepositorio.delete(proveedor);
+        }
+    } 
+    
+    
 }

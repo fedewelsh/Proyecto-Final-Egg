@@ -173,4 +173,26 @@ public class UsuarioService implements UserDetailsService {
     }
 
     
+      @Transactional
+    public Usuario eliminarUsuario(String id, MultipartFile archivo) throws MiException{
+       
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        
+        if(respuesta != null){
+        Usuario usuario = respuesta.get();
+        
+        String idImagen = null;
+        if(usuario.getImagen() != null){
+            idImagen = usuario.getImagen().getId();
+        }
+        Imagen imagen = imagenService.eliminar(archivo, idImagen);
+        
+        usuarioRepositorio.delete(usuario);
+        return usuario;
+        } else{
+            throw new MiException("No se encontró un usuario con el ID proporcionado: " + id);
+        }
+        
+    }
+     
 }

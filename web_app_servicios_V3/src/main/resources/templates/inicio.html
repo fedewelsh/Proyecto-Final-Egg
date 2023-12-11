@@ -1,132 +1,164 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ServiX</title>
-        <link rel="stylesheet" href="../css/index.css">
+        <link rel="stylesheet" href="../css/inicio.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+        <style>
+            
+        </style>    
     </head>
 
     <body>
-
-        <header>
-            <div class="portada">
-                <h1>Profesionales <br />de confianza</h1>
-                <p>133.392 trabajos hechos con serviX</p>
-                <p class="bienvenido" th:if="${session.usuariosession != null}" ><span th:text="'Bienvenido ' + ${session.usuariosession.nombre}"></span></p>
-                <a th:if="${session.usuariosession.imagen != null}" class="d-flex align-items-center">
-                    <img class="foto"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" >
-                </a>
-            </div>
+        <div class="cuerpo">
+            <nav id="myNav">
+                <a href="/inicio" class="logoenlace"><img src="../img/Logo1.png" alt="Logo" class="logo"></a>
+                <ul>
+                    <!-- 
+                    <li th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null} ">
+                        <a href="#">Servicios▾</a>
+                        <div class="dropdown-content">
+                            <a href="/proveedor/proveedores_list?tipo_servicio=plomero">Plomería</a>
+                            <a href="/proveedor/proveedores_list?tipo_servicio=albañil">Albañilería</a>
+                            <a href="/proveedor/proveedores_list?tipo_servicio=carpintero">Carpintería</a>
+                            <a href="/proveedor/proveedores_list?tipo_servicio=cerrajero">Cerrajería</a>
+                            <a href="/proveedor/proveedores_list?tipo_servicio=electricista">Electricista</a>
+                            <a href="/proveedor/proveedores_list?tipo_servicio=gasista">Gasista</a>
+                        </div>
+                    </li>-->
                     
-
-            <div class="container contenedorLibros">
-                <p class="tituloLibros" th:if="${session.usuariosession != null}" th:text=" 'Bienvenido/a '+ ${session.usuariosession.nombre} "></p>
-            </div>
-            <!--            <div class="container">
-                                <a th:if="${session.usuariosession.imagen != null}" class="d-flex align-items-center">
-                                    <img class="logo"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" >
-                                </a>
-                        </div>-->
-
-            <div class="carousel-container">
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img class="d-block w-100" src="../img/Portada1.jpeg" alt="First slide">
+                    <h3 class="saludo" th:if="${session.usuariosession != null}"><span th:text="'Bienvenido ' + ${session.usuariosession.nombre}"></span></h3>
+                    <li>
+                        <a href="#" class="userenlace" >
+                        <img src="../img/notify1.png" alt="User" class="user-notify">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="">Notificaciones</a>
+                            <hr/>
+                            <p style="color:black;margin-left: 40px;">Nuevo Mensaje</p>
                         </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="../img/Portada2.jpg" alt="Second slide">
+                    </li>
+                    
+                    <li>
+                        <a th:if="${session.usuariosession.imagen != null}" href="#" class="userperfil">
+                            <img class="user-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="javascript:void(0);" onclick="mostrarRegistroPanel()">Perfil</a>
+                            <!--<hr class="dropdown-line">-->
+                            <a href="#" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null}"> Contratos</a>
+                            <a href="#" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} "> Trabajos</a>
+                            <a href="/logout"> Cerrar Sesión</a>
                         </div>
-                        <div class="carousel-item">
-                            <img class="d-block w-100" src="../img/Portada3.jpg" alt="Third slide">
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="div-transparente">
+            
+            <div id="container1" class="container1">
+                <h2>PERFIL</h2>
+                    <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null} ">
+                        <div class="div-perfil-image">
+                            <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
+                        </div>
+                        <div class="div-data">
+                            <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
+                            <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
+                            <p class="telefono" th:text="'Telefono: ' + ${session.usuariosession.telefono}"></p>
+                            <p class="barrio" th:text="'Barrio: ' + ${session.usuariosession.cliente.barrio}"></p>
+                            <p class="direccion" th:text="'Direccion: ' + ${session.usuariosession.cliente.direccion}"></p>
                         </div>
                     </div>
-
-                    <!--  
-                    <div class="carousel-text">
-                        <h1>Profesionales <br />de confianza</h1>
-                        <p>133.392 trabajos hechos con serviX</p>
+                    <div class="div-botones"  th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null}">
+                        <a th:href="@{/cliente/eliminar_cliente/__${session.usuariosession.id}__}" class="boton eliminar">Eliminar perfil</a>
+                        <a href="/modificar" class="boton modificar">Modificar perfil</a>
+                        <a href="/inicio" class="boton modificar">Volver</a> 
                     </div>
-                    -->
+                    
+                    <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
+                        <div class="div-perfil-image" >
+                            <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
+                        </div>
+                        <div class="div-data">
+                            <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
+                            <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
+                            <p class="telefono" th:text="'Teléfono: ' + ${session.usuariosession.telefono}"></p>
+                            <p class="barrio" th:text="'Servicio que ofrece: ' + ${session.usuariosession.proveedor.tipo_servicio}"></p>
+                            <p class="direccion" th:text="'Descripción: ' + ${session.usuariosession.proveedor.descripcion}"></p>
+                        </div>
+                    </div>
+                    <div class="div-botones" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
+                        <a href="#" class="boton eliminar">Eliminar perfil</a>
+                        <a href="/modificar" class="boton modificar">Modificar perfil</a>
+                        <a href="/inicio" class="boton modificar">Volver</a> 
+                    </div>
+                    
+                
+                 
+            </div>
+            
+            <div id="form-servicios" class="container2" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null} ">
+                <h2>Mirá nuestro catálogo de servicios</h2>
+                <div class="button-container">
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Albañil" class="category-button">
+                        <img src="../img/botons/icon1.PNG" alt="Botón 1">
+                        <p>Albañilería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Cerrajero" class="category-button">
+                        <img src="../img/botons/icon2.PNG" alt="Botón 2">
+                        <p>Cerrajería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Carpintero" class="category-button">
+                        <img src="../img/botons/icon4.PNG" alt="Botón 4">
+                        <p>Carpintería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Plomero" class="category-button">
+                        <img src="../img/botons/icon6.PNG" alt="Botón 6">
+                        <p>Plomería</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Gasista" class="category-button">
+                        <img src="../img/botons/icon7.PNG" alt="Botón 7">
+                        <p>Gasista</p>
+                    </a>
+                    <a href="/proveedor/proveedores_list?tipo_servicio=Electricista" class="category-button">
+                        <img src="../img/botons/icon3.PNG" alt="Botón 3">
+                        <p>Electricista</p>
+                    </a>                   
+
+
+                </div>
+                <div>
+                    <div class="body-container" th:each="proveedor : ${proveedores}">
+                        <div class="review-container">
+                            
+                                <div class="review-info-container">
+                                    <img class="review-image" th:src="@{/imagen/foto/__${proveedor.usuario.id}__}" alt="Foto proveedor">
+                                 
+                                    <div class="review-info">
+                                    <h4 th:text="${proveedor.usuario.nombre}+'  ('+${proveedor.tipo_servicio}+')'  "></h4>
+                                    
+                                    <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div> <!-- Cinco estrellas -->
+                                    <p th:text="'Correo electrónico: ' +${proveedor.usuario.email}"></p>
+                                    <p th:text="'Teléfono: ' +${proveedor.usuario.telefono}">></p>
+                                    
+                                    </div>
+                                    <a href="#" class="boton modificar">Solicitar Servicio</a>
+                                    
+                                </div>
+                            <p th:text="'Descripción: ' +${proveedor.descripcion}"></p>   
+                        </div>
+                        <hr style="border: 1px solid orange; " />
+                    </div>
                 </div>
             </div>
-
-        </header>
-
-        <nav>
-            <a href="/logout">Cerrar Cesión</a>
-            <a href="/perfil">Perfil</a>
-
-
-            <div class="dropdown">
-                <select id="registerDropdown" onchange="redirigir(this)">
-                    <option value="#" selected disabled>Servicios</option>
-                    <option value="/proveedor/proveedores_list?tipo_servicio=plomero">Plomería</option>
-                    <option value="/proveedor/proveedores_list?tipo_servicio=gasista">Gasista</option>
-                    <option value="/proveedor/proveedores_list?tipo_servicio=carpintero">Carpintería</option>                    
-                    <option value="/proveedor/proveedores_list?tipo_servicio=electricista">Electricista</option>
-                    <option value="/proveedor/proveedores_list?tipo_servicio=albañil">Albañil</option>
-                    Add more options as needed 
-                </select>
-            </div>
-
-
-
-
-            <img src="../img/Logo1.png" alt="Logo" class="logo">
-        </nav>
-
-        <section>
-            <h2 id="titulo1">Conoce nuestras categorías</h2>
-
-            <!-- Botones superiores -->
-            <div class="button-container">
-                <div class="category-button">
-                    <img src="../img/botons/icon1.PNG" alt="Botón 1">
-                </div>
-                <div class="category-button">
-                    <img src="../img/botons/icon2.PNG" alt="Botón 2">
-                </div>
-                <div class="category-button">
-                    <img src="../img/botons/icon3.PNG" alt="Botón 3">
-                </div>
-                <div class="category-button">
-                    <img src="../img/botons/icon4.PNG" alt="Botón 4">
-                </div>
-
-            </div>
-
-            <!-- Botones inferiores -->
-            <div class="button-container">
-                <div class="category-button">
-                    <img src="../img/botons/icon5.PNG" alt="Botón 5">
-                </div>
-                <div class="category-button">
-                    <img src="../img/botons/icon6.PNG" alt="Botón 6">
-                </div>
-                <div class="category-button">
-                    <img src="../img/botons/icon7.PNG" alt="Botón 7">
-                </div>
-                <div class="category-button">
-                    <img src="../img/botons/icon8.PNG" alt="Botón 8">
-                </div>
-
-            </div>
-
-            <h2 id="titulo2">Se parte de nosotros</h2>
-            <img src="../img/Merch.PNG" alt="merch" class="merch">
-        </section>
-
-        <footer>
-            <p>&copy;Copyright 2023 Servicios a Domicilio</p>
-        </footer>
-
+        </div>
+        
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -137,26 +169,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+    <script>
+        function mostrarRegistroPanel() {
+          document.getElementById("container1").style.display = "flex";
+          document.getElementById("form-servicios").style.display = "none";
+          
+        }
 
-    <script>
-                   // Inicia el Carousel
-                   document.addEventListener('DOMContentLoaded', function () {
-                       new bootstrap.Carousel(document.getElementById('carouselExampleSlidesOnly'), {
-                           interval: 20000, // Puedes ajustar el intervalo de tiempo entre las transiciones
-                           wrap: true // Establece en "false" si no quieres que el Carousel vuelva al inicio después de la última imagen
-                       });
-                   });
-    </script>
-    <script>
-        function redirigir(selectElement) {
-            var selectedOption = selectElement.options[selectElement.selectedIndex];
-            var selectedValue = selectedOption.value;
-            if (selectedValue !== "#") {
-                window.location.href = selectedValue;
-            }
+        function ocultarRegistroPanel() {
+          document.getElementById("container1").style.display = "none";
+          document.getElementById("form-servicios").style.display = "flex";
         }
     </script>
     
-    
+    <script>
+        // Captura el evento de scroll
+        window.addEventListener("scroll", function () {
+            var nav = document.getElementById("myNav");
+
+            // Agrega la clase "scrolled" al nav cuando el scroll está por debajo de 30px
+            if (window.scrollY > 30) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+    </script>
 
 </html>

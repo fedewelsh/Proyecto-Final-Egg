@@ -9,13 +9,13 @@
     <body>
 
         <header>
-            <a href="index.html">
+            <a href="/">
                 <img src="../img/Logo1.PNG" alt="Logo" class="logo">
             </a>
 
         </header>
 
-        <form  th:action="@{/logincheck}" method="POST">
+        <form th:action="@{/logincheck}" method="POST">
             <label for="username">Nombre de Usuario:</label>
             <input type="text" id="username" name="email" required>
 
@@ -23,16 +23,46 @@
             <input type="password" id="password" name="password" required>
 
            
-                <button type="submit">Iniciar Sesión</button>
-           
+            <button type="submit">Iniciar Sesión</button>
+            
+            <p>¿No tienes una cuenta? <a href="javascript:void(0);" onclick="mostrarRegistroPanel()">Regístrate</a></p>
+
 
         </form>
         <div class="extra-info">
-            <a href="index.html">Terms</a>
-            <a href="index.html">Contact Servix Support</a>
-            <a href="index.html">Privacy</a>
+            <a href="/">Terms</a>
+            <a href="/">Contact Servix Support</a>
+            <a href="/">Privacy</a>
         </div>
-
+        
+        <div id="registroPanel" class="registro-panel">
+            <div id="cerrarPanel" onclick="ocultarRegistroPanel()">✖</div>
+            <div class="registro-content">
+              <p>Registrarse como:</p>
+              <button id="clienteBtn" onclick="registrar('cliente')">Cliente</button>
+              <button id="proveedorBtn" onclick="registrar('proveedor')">Proveedor</button>
+            </div>
+        </div>
     </body>
+    <script>
+        function mostrarRegistroPanel() {
+          document.getElementById("registroPanel").style.display = "flex";
+        }
+
+        function ocultarRegistroPanel() {
+          document.getElementById("registroPanel").style.display = "none";
+        }
+
+        function registrar(tipo) {
+          // Puedes realizar acciones específicas según el tipo seleccionado (cliente o proveedor)
+          console.log("Registrarse como: " + tipo);
+          if (tipo === 'cliente') {
+            window.location.href = '/cliente/cliente_formulario';
+          } else if (tipo === 'proveedor') {
+            window.location.href = '/proveedor/proveedor_formulario';
+          }
+        }
+    </script>
+
 </html>
 

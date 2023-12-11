@@ -103,17 +103,11 @@ public class PortalControlador {
         return "usuario_modificar.html";
     }
     
+   
     
     
     
-    
-//    @GetMapping("/modificar/{id}")
-//    public String modificar(@PathVariable String id, ModelMap modelo){
-//            
-//            modelo.put("usuario", usuarioService.getOne(id));
-// 
-//    return "formulario_modificar.html";
-//    }
+
 }
 
 

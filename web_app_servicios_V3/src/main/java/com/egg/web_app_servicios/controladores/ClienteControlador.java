@@ -6,10 +6,12 @@ package com.egg.web_app_servicios.controladores;
 
 
 
+import com.egg.web_app_servicios.entidades.Cliente;
 import com.egg.web_app_servicios.excepciones.MiException;
 
 import com.egg.web_app_servicios.service.ClienteService;
 import com.egg.web_app_servicios.service.UsuarioService;
+import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,15 +98,39 @@ public String ClienteModificar(@PathVariable String id,
 //            usuarioService.modificarUsuario(id, archivo, nombre, telefono, email, password, password2);
             clienteService.modificarCliente(id, archivo, nombre, telefono, email, barrio, direccion, password, password2);
             modelo.put("exito", "El usuario fue cargado correctamente");
+            return "redirect:/";
         } catch (MiException ex) {
             modelo.put("error", ex.getMessage());
             return "usuario_modificar.html";
         }
         
-    return "index.html";
+    
 }
  
+@GetMapping("/eliminar_cliente/{id}")
+public String ClienteEliminar(@PathVariable String id,
+                             MultipartFile archivo,
+                              ModelMap modelo) {
 
+    try {
+        clienteService.eliminarCliente(id, archivo);
+        modelo.put("exito", "Cliente eliminado");
+        return "redirect:/";
+    } catch (MiException ex) {
+        modelo.put("error", ex.getMessage());
+        return "inicio.html";
+    }
 
     
+}
+
+    @GetMapping("/todos_clientes")
+    public String mostrarTodosLosClientes(ModelMap modelo) {
+        List<Cliente> clientes = clienteService.listarCliente();
+        modelo.addAttribute("clientes", clientes);
+        return "panel.html"; // Ajusta el nombre de la vista según tu estructura de carpetas
+    }
+
+
+
 }
