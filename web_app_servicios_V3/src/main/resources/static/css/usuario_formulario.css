@@ -11,8 +11,17 @@ body {
     display: flex;
     align-items: center;
 }
+.containeradmin{
+    display: flex;
+    justify-content: center; /* Centra horizontalmente los elementos */
+    align-items: center; /* Centra verticalmente los elementos */
+    flex-wrap: wrap; 
+    margin-top: 20px; 
+    margin-bottom: 20px; 
+}
 
 .logo {
+    float: right;
     width: 100px; /* Adjust the width as needed */
     margin-right: 250px; /* Adjust the margin as needed */
 	border-radius: 15px; 

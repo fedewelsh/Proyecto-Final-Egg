@@ -75,7 +75,8 @@
                         </div>
                     </div>
                 <div class="div-botones">
-                    <a href="#" class="boton eliminar">Eliminar perfil</a>
+                    
+                    <button onclick="confirmarEliminacion(event)" th:href="@{/cliente/eliminar_cliente/__${session.usuariosession.id}__}" class="boton eliminar">Eliminar perfil</button>
                     <a href="/modificar" class="boton modificar">Modificar perfil</a>
                     <a href="/inicio" class="boton modificar">Volver</a> 
                 </div>
@@ -102,8 +103,8 @@
                                     
                                     
                                    
-                                     <a th:href="@{/cliente/eliminar_cliente/__${cliente.usuario.id}__}" class="solicitar-button" style="background-color: red;">Eliminar</a>
-                                    
+                                     <a th:href="@{/admin/eliminar_cliente/__${cliente.usuario.id}__}" class="boton-solicitar" style="background-color: red;" onclick="confirmarEliminacion(event)">Eliminar</a>
+                                     <a th:href="@{/modificar_usuario/__${cliente.usuario.id}__}" class="boton-solicitar" style="background-color: orange;" onclick="confirmarModificacion()">Modificar</a>
                                 </div>
                               
                         </div>
@@ -157,7 +158,8 @@
                                     
                                     </div>
                                    
-                                   <a th:href="@{/proveedor/eliminar_proveedor/__${proveedor.usuario.id}__}" class="solicitar-button" style="background-color: red;">Eliminar</a>
+                                   <a th:href="@{/admin/eliminar_proveedor/__${proveedor.usuario.id}__}" class="boton-solicitar" style="background-color: red;" onclick="confirmarEliminacion(event)">Eliminar</a>
+                                    <a th:href="@{/modificar_usuario/__${proveedor.usuario.id}__}" class="boton-solicitar" style="background-color: orange;" onclick="confirmarModificacion()">Modificar</a>
                                     
                                 </div>
                             <p th:text="'Descripción: ' +${proveedor.descripcion}"></p>   
@@ -212,6 +214,26 @@
                 nav.classList.remove("scrolled");
             }
         });
+    </script>
+    <script>
+        function confirmarEliminacion(event) {
+            var confirmacion = confirm("¿Realmente quieres eliminar el perfil?");
+            if (confirmacion) {
+                window.location.href = event.target.getAttribute('href');
+            } else {
+                event.preventDefault();
+                alert("Operación cancelada.");
+            }
+        }
+                function confirmarModificacion() {
+            var confirmacion = confirm("¿Realmente quieres modificar los datos?");
+            if (confirmacion) {
+                document.getElementById('form_48915').submit();
+            } else {
+                event.preventDefault(); // Evita el envío del formulario
+                window.location.href = 'http://localhost:8080/inicio';
+            }
+        }
     </script>
 
 </html>

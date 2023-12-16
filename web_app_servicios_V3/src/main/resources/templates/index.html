@@ -15,7 +15,7 @@
         <div class="cuerpo">     
             <header>
                 <div class="portada">
-                    <h1>Profesionales <br />de confianza</h1>
+                    <h1 id="typed-text">Profesionales <br>de confianza</h1>
                     <p>133.392 trabajos hechos con serviX</p>
                 </div>
                 <div class="carousel-container">
@@ -32,20 +32,16 @@
                                 <img class="d-block w-100" src="../img/Portada3.jpg" alt="Third slide">
                             </div>
                         </div>
-
-                        <!--  
-                        <div class="carousel-text">
-                            <h1>Profesionales <br />de confianza</h1>
-                            <p>133.392 trabajos hechos con serviX</p>
-                        </div>
-                        -->
+                        
                     </div>
                 </div>
             </header>
-            <nav>
+            <nav id="myNav">
                 <a href="/" class="logoenlace"><img src="../img/Logo1.png" alt="Logo" class="logo"></a>
                     <ul>
-                        
+                        <li>
+                            <a href="/">Inicio</a>
+                        </li>
                         <li>
                             <a href="#">Registrarse▾</a>
                             <div class="dropdown-content">
@@ -56,6 +52,7 @@
                         <li>
                             <a href="../login">Ingresar</a>
                         </li>
+                        
                     </ul>
                 </nav>
 
@@ -64,7 +61,7 @@
 
                 <!-- Botones superiores -->
                 <div class="button-container">
-                    <a href="/proveedor/proveedores_list?tipo_servicio=Albañil" class="category-button">
+                   <a href="/proveedor/proveedores_list?tipo_servicio=Albañil" class="category-button">
                         <img src="../img/botons/icon1.PNG" alt="Botón 1">
                         <p>Albañilería</p>
                     </a>
@@ -128,11 +125,43 @@
             // Inicia el Carousel
             document.addEventListener('DOMContentLoaded', function () {
                 new bootstrap.Carousel(document.getElementById('carouselExampleSlidesOnly'), {
-                    interval: 20000, // Puedes ajustar el intervalo de tiempo entre las transiciones
+                    interval: 10000, // Puedes ajustar el intervalo de tiempo entre las transiciones
                     wrap: true // Establece en "false" si no quieres que el Carousel vuelva al inicio después de la última imagen
                 });
             });
     </script>
     
+    <script>
+        // Captura el evento de scroll
+        window.addEventListener("scroll", function () {
+            var nav = document.getElementById("myNav");
+
+            // Agrega la clase "scrolled" al nav cuando el scroll está por debajo de 30px
+            if (window.scrollY > 30) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+    </script>
+ <script>
+        const typedText = document.getElementById('typed-text');
+        const text = typedText.innerText;
+        typedText.innerText = ''; // para limpiar el contenido original
+
+        let i = 0;
+        // tiempo
+        function typeWriter() {
+            if (i < text.length) {
+                typedText.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Llamamos a la función para iniciar el efecto al cargar la página
+        typeWriter();
+    </script>
+
 
 </html>

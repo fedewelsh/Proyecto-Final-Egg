@@ -6,16 +6,22 @@ package com.egg.web_app_servicios.controladores;
 
 import com.egg.web_app_servicios.entidades.Imagen;
 import com.egg.web_app_servicios.entidades.Proveedor;
+import com.egg.web_app_servicios.entidades.Solicitud;
 import com.egg.web_app_servicios.entidades.Usuario;
 import com.egg.web_app_servicios.excepciones.MiException;
+import com.egg.web_app_servicios.repositorios.ProveedorRepositorio;
+import com.egg.web_app_servicios.repositorios.SolicitudRepositorio;
+import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
 import com.egg.web_app_servicios.service.ClienteService;
 import com.egg.web_app_servicios.service.ImagenService;
 import com.egg.web_app_servicios.service.ProveedorService;
+import com.egg.web_app_servicios.service.SolicitudService;
 import com.egg.web_app_servicios.service.UsuarioService;
 import java.util.HashMap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -48,6 +54,18 @@ public class ProveedorControlador {
     
     @Autowired
     private ClienteService clienteService;
+    
+    @Autowired
+    private SolicitudService solicitudService;
+    
+    @Autowired
+    private SolicitudRepositorio solicitudRepositorio;
+    
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+    
+    @Autowired
+    private ProveedorRepositorio proveedorRepositorio;
     
     
     @GetMapping("/proveedor_formulario")
@@ -113,16 +131,15 @@ public String listarPorTipoServicio(@RequestParam(name = "tipo_servicio", requir
 @PostMapping("/modificar_proveedor/{id}")
 public String ProveedorModificar(@PathVariable String id, 
                        @RequestParam String nombre, 
-                       @RequestParam String password, 
-                       @RequestParam String password2,
-                       @RequestParam String email, 
                        @RequestParam String telefono, 
                        @RequestParam String tipo_servicio,
                        String descripcion,
+                       String email,
+                       String password,
+                       String password2,
                        ModelMap modelo,                       
                        MultipartFile archivo) {
     
-        System.out.println("nombre: " + nombre + "password: " + password + "email: " + email + "telefono: " + telefono + "tipo servicio: " + tipo_servicio);
         
         try {
 //            usuarioService.modificarUsuario(id, archivo, nombre, telefono, email, password, password2);
@@ -163,4 +180,6 @@ public String listarTodosLosProveedores(Model modelo) {
 }
 
 
+
 }
+

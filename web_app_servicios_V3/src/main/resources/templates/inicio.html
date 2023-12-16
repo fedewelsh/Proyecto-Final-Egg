@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <style>
-            
+
         </style>    
     </head>
 
@@ -18,23 +18,10 @@
             <nav id="myNav">
                 <a href="/inicio" class="logoenlace"><img src="../img/Logo1.png" alt="Logo" class="logo"></a>
                 <ul>
-                    <!-- 
-                    <li th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null} ">
-                        <a href="#">Servicios▾</a>
-                        <div class="dropdown-content">
-                            <a href="/proveedor/proveedores_list?tipo_servicio=plomero">Plomería</a>
-                            <a href="/proveedor/proveedores_list?tipo_servicio=albañil">Albañilería</a>
-                            <a href="/proveedor/proveedores_list?tipo_servicio=carpintero">Carpintería</a>
-                            <a href="/proveedor/proveedores_list?tipo_servicio=cerrajero">Cerrajería</a>
-                            <a href="/proveedor/proveedores_list?tipo_servicio=electricista">Electricista</a>
-                            <a href="/proveedor/proveedores_list?tipo_servicio=gasista">Gasista</a>
-                        </div>
-                    </li>-->
-                    
                     <h3 class="saludo" th:if="${session.usuariosession != null}"><span th:text="'Bienvenido ' + ${session.usuariosession.nombre}"></span></h3>
                     <li>
                         <a href="#" class="userenlace" >
-                        <img src="../img/notify1.png" alt="User" class="user-notify">
+                            <img src="../img/notify1.png" alt="User" class="user-notify">
                         </a>
                         <div class="dropdown-content">
                             <a href="">Notificaciones</a>
@@ -42,7 +29,7 @@
                             <p style="color:black;margin-left: 40px;">Nuevo Mensaje</p>
                         </div>
                     </li>
-                    
+
                     <li>
                         <a th:if="${session.usuariosession.imagen != null}" href="#" class="userperfil">
                             <img class="user-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}">
@@ -51,58 +38,58 @@
                             <a href="javascript:void(0);" onclick="mostrarRegistroPanel()">Perfil</a>
                             <!--<hr class="dropdown-line">-->
                             <a href="#" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null}"> Contratos</a>
-                            <a href="#" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} "> Trabajos</a>
+                            <a th:href="@{/contrato/lista_solicitud/__${session.usuariosession.proveedor.id}__}" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} "> Trabajos</a>
                             <a href="/logout"> Cerrar Sesión</a>
                         </div>
                     </li>
                 </ul>
             </nav>
         </div>
-        
+
         <div class="div-transparente">
-            
+
             <div id="container1" class="container1">
                 <h2>PERFIL</h2>
-                    <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null} ">
-                        <div class="div-perfil-image">
-                            <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
-                        </div>
-                        <div class="div-data">
-                            <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
-                            <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
-                            <p class="telefono" th:text="'Telefono: ' + ${session.usuariosession.telefono}"></p>
-                            <p class="barrio" th:text="'Barrio: ' + ${session.usuariosession.cliente.barrio}"></p>
-                            <p class="direccion" th:text="'Direccion: ' + ${session.usuariosession.cliente.direccion}"></p>
-                        </div>
+                <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null} ">
+                    <div class="div-perfil-image">
+                        <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
                     </div>
-                    <div class="div-botones"  th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null}">
-                        <a th:href="@{/cliente/eliminar_cliente/__${session.usuariosession.id}__}" class="boton eliminar">Eliminar perfil</a>
-                        <a href="/modificar" class="boton modificar">Modificar perfil</a>
-                        <a href="/inicio" class="boton modificar">Volver</a> 
+                    <div class="div-data">
+                        <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
+                        <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
+                        <p class="telefono" th:text="'Telefono: ' + ${session.usuariosession.telefono}"></p>
+                        <p class="barrio" th:text="'Barrio: ' + ${session.usuariosession.cliente.barrio}"></p>
+                        <p class="direccion" th:text="'Direccion: ' + ${session.usuariosession.cliente.direccion}"></p>
                     </div>
-                    
-                    <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
-                        <div class="div-perfil-image" >
-                            <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
-                        </div>
-                        <div class="div-data">
-                            <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
-                            <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
-                            <p class="telefono" th:text="'Teléfono: ' + ${session.usuariosession.telefono}"></p>
-                            <p class="barrio" th:text="'Servicio que ofrece: ' + ${session.usuariosession.proveedor.tipo_servicio}"></p>
-                            <p class="direccion" th:text="'Descripción: ' + ${session.usuariosession.proveedor.descripcion}"></p>
-                        </div>
+                </div>
+                <div class="div-botones"  th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null}">
+                    <button onclick="confirmarEliminacion(event)" th:href="@{/cliente/eliminar_cliente/__${session.usuariosession.id}__}" class="boton eliminar">Eliminar perfil</button>
+                    <a href="/modificar" class="boton modificar">Modificar perfil</a>
+                    <a href="/inicio" class="boton modificar">Volver</a> 
+                </div>
+
+                <div class="bodydatos" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
+                    <div class="div-perfil-image" >
+                        <img class="perfil-image" th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="Mi Foto de Perfil">
                     </div>
-                    <div class="div-botones" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
-                        <a href="#" class="boton eliminar">Eliminar perfil</a>
-                        <a href="/modificar" class="boton modificar">Modificar perfil</a>
-                        <a href="/inicio" class="boton modificar">Volver</a> 
+                    <div class="div-data">
+                        <h2 th:text="'Nombre: ' + ${session.usuariosession.nombre}"></h2>
+                        <p class="email" th:text="'Email: ' + ${session.usuariosession.email}"></p>
+                        <p class="telefono" th:text="'Teléfono: ' + ${session.usuariosession.telefono}"></p>
+                        <p class="barrio" th:text="'Servicio que ofrece: ' + ${session.usuariosession.proveedor.tipo_servicio}"></p>
+                        <p class="direccion" th:text="'Descripción: ' + ${session.usuariosession.proveedor.descripcion}"></p>
                     </div>
-                    
-                
-                 
+                </div>
+                <div class="div-botones" th:if="${session.usuariosession != null} and ${session.usuariosession.proveedor != null} ">
+                    <button onclick="confirmarEliminacion(event)" th:href="@{/proveedor/eliminar_proveedor/__${session.usuariosession.id}__}" class="boton eliminar">Eliminar perfil</button>
+                    <a href="/modificar" class="boton modificar">Modificar perfil</a>
+                    <a href="/inicio" class="boton modificar">Volver</a> 
+                </div>
+
+
+
             </div>
-            
+
             <div id="form-servicios" class="container2" th:if="${session.usuariosession != null} and ${session.usuariosession.cliente != null} ">
                 <h2>Mirá nuestro catálogo de servicios</h2>
                 <div class="button-container">
@@ -136,29 +123,31 @@
                 <div>
                     <div class="body-container" th:each="proveedor : ${proveedores}">
                         <div class="review-container">
-                            
-                                <div class="review-info-container">
-                                    <img class="review-image" th:src="@{/imagen/foto/__${proveedor.usuario.id}__}" alt="Foto proveedor">
-                                 
-                                    <div class="review-info">
+
+                            <div class="review-info-container">
+                                <img class="review-image" th:src="@{/imagen/foto/__${proveedor.usuario.id}__}" alt="Foto proveedor">
+
+                                <div class="review-info">
                                     <h4 th:text="${proveedor.usuario.nombre}+'  ('+${proveedor.tipo_servicio}+')'  "></h4>
-                                    
+
                                     <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div> <!-- Cinco estrellas -->
                                     <p th:text="'Correo electrónico: ' +${proveedor.usuario.email}"></p>
                                     <p th:text="'Teléfono: ' +${proveedor.usuario.telefono}">></p>
-                                    
-                                    </div>
-                                    <a href="#" class="boton modificar">Solicitar Servicio</a>
-                                    
+
                                 </div>
+                                <a th:href="@{/contrato/solicitud/{clienteId}/{proveedorId}(clienteId=${session.usuariosession.cliente.id}, proveedorId=${proveedor.id})}" class="boton-solicitar">Solicitar servicio</a>
+
+                            </div>
                             <p th:text="'Descripción: ' +${proveedor.descripcion}"></p>   
                         </div>
                         <hr style="border: 1px solid orange; " />
                     </div>
                 </div>
+
             </div>
+
         </div>
-        
+
     </body>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
             integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -170,18 +159,23 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
     <script>
-        function mostrarRegistroPanel() {
-          document.getElementById("container1").style.display = "flex";
-          document.getElementById("form-servicios").style.display = "none";
-          
-        }
+                              function mostrarRegistroPanel() {
+                                  document.getElementById("container1").style.display = "flex";
+                                  document.getElementById("form-servicios").style.display = "none";
+                                  document.getElementById("listaSolicitudes").style.display = "none";
+                              }
 
-        function ocultarRegistroPanel() {
-          document.getElementById("container1").style.display = "none";
-          document.getElementById("form-servicios").style.display = "flex";
-        }
+                              function ocultarRegistroPanel() {
+                                  document.getElementById("container1").style.display = "none";
+                                  document.getElementById("form-servicios").style.display = "flex"
+                                          ;
+                              }
+
+                              function mostrarPanelServicios() {
+                                  document.getElementById("listaSolicitudes").style.display = "table";
+                              }
     </script>
-    
+
     <script>
         // Captura el evento de scroll
         window.addEventListener("scroll", function () {
@@ -194,6 +188,17 @@
                 nav.classList.remove("scrolled");
             }
         });
+    </script>
+    <script>
+        function confirmarEliminacion(event) {
+            var confirmacion = confirm("¿Realmente quieres eliminar el perfil?");
+            if (confirmacion) {
+                window.location.href = event.target.getAttribute('href');
+            } else {
+                event.preventDefault();
+                alert("Operación cancelada.");
+            }
+        }
     </script>
 
 </html>

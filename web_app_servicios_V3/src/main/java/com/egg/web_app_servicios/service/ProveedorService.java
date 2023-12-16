@@ -6,6 +6,7 @@ package com.egg.web_app_servicios.service;
 
 
 
+import com.egg.web_app_servicios.entidades.Imagen;
 import com.egg.web_app_servicios.entidades.Proveedor;
 import com.egg.web_app_servicios.entidades.Usuario;
 
@@ -45,8 +46,10 @@ public class ProveedorService {
     @Autowired
     private UsuarioService usuarioService;
     
-//    @Autowired
-//    private ImagenService imagenService;
+    
+    
+    @Autowired
+    private ImagenService imagenService;
     
   
     @Transactional
@@ -87,7 +90,7 @@ public class ProveedorService {
     @Transactional
     public void modificarProveedor(String id, MultipartFile archivo, String nombre, String telefono, String email, String tipo_servicio, String descripcion, String password, String password2) throws MiException{
         
-         validar(nombre, telefono, email, tipo_servicio);
+         
         
         Usuario respuesta = usuarioRepositorio.getOne(id);
         
@@ -139,20 +142,37 @@ public class ProveedorService {
     
     
     @Transactional
-    public void eliminarProveedor(String id, MultipartFile archivo) throws MiException{
+public void eliminarProveedor(String id, MultipartFile archivo) throws MiException {
+    Usuario respuesta = usuarioRepositorio.getOne(id);
+
+    if (respuesta != null) {
+        Proveedor proveedor = respuesta.getProveedor();
+        Usuario usuario = respuesta;
+
+        // Eliminar el usuario y el proveedor en la misma transacción
+        usuarioService.eliminarUsuarioYProveedor(usuario, proveedor, archivo);
+    }
+}
+    
+    @Transactional
+    public void modificarProveedorParaAdmin(String id, MultipartFile archivo, String nombre, String telefono, String email, String tipo_servicio, String descripcion, String password, String password2) throws MiException{
         
-        
+         
         
         Usuario respuesta = usuarioRepositorio.getOne(id);
         
         if(respuesta != null){
         Proveedor proveedor =respuesta.getProveedor();
-        Usuario usuario = usuarioService.eliminarUsuario(id, archivo);
-              
+        Usuario usuario = usuarioService.modificarUsuarioParaAdmin(id, archivo, nombre, telefono, email, password, password2);
+        proveedor.setTipo_servicio(tipo_servicio);
+        proveedor.setDescripcion(descripcion);
+        proveedor.setUsuario(usuario);
        
-        proveedorRepositorio.delete(proveedor);
+       
+        proveedorRepositorio.save(proveedor);
         }
-    } 
+    }
     
+     
     
 }

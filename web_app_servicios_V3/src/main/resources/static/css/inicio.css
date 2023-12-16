@@ -2,13 +2,13 @@ body, html {
    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    height: 100%;
+    
 }
 .cuerpo {
     margin-bottom: 0;
 }
 body {
-    background-image: url('../img/fondo2.jpg'); 
+    background-image: url('../img/fondo2.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -31,9 +31,16 @@ nav {
     top: 30px;
     width: 95.5%;
     display: flex;
-    height:4.2em;
+    height:4.3em;
     justify-content: space-between;
     align-items: center;
+    transition: background-color 0.3s;
+}
+nav.scrolled {
+    left: 0px;
+    top: 0px;
+    width: 100%; 
+    height: 4.3em;
 }
 
 nav a {
@@ -132,7 +139,6 @@ li:hover {
  }
  .userenlace:hover{
      transform: scale(1.1);
-     
  }
  
  .userperfil{
@@ -166,6 +172,7 @@ li:hover {
    color: #fff; 
    padding: 20px;
    border-radius: 10px;
+   
  }
 
 /*******Container1*********/
@@ -207,8 +214,8 @@ li:hover {
     color: #fff;
 }
 .perfil-image {
-    max-width: 80%;
-    height: auto;
+    width: 20em;
+    height: 20em;
     border-radius: 50%;
 }
 
@@ -229,8 +236,6 @@ li:hover {
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
-    width: 180px;
-    height: 40px;
 }
 
 .eliminar {
@@ -261,6 +266,8 @@ li:hover {
     justify-content: space-around;
     margin-top: 20px;
 }
+
+
 .category-button {
     width: 80px;
     text-align: center;
@@ -272,7 +279,8 @@ li:hover {
 
 .category-button:hover{
     transform: scale(1.2);
-    
+    text-decoration: none;
+    color: white;
     font-weight: bold;
 }
 
@@ -282,7 +290,7 @@ li:hover {
     height: 4em;
     border-radius: 50%; /* Ajusta el radio de borde según sea necesario */
 }
-/****Listado*******/
+/****Listado Servicios*******/
 .review-container {
     display: flex;
     flex-direction: column;
@@ -331,4 +339,21 @@ li:hover {
    border: none;
    border-radius: 4px;
    cursor: pointer;
+}
+
+.boton-solicitar{
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #ff9800; /* naranja */
+    margin-left: 10px;
+    margin-right: 60px;
+}
+.boton-solicitar:hover{
+    text-decoration: none;
+    color: white;
 }

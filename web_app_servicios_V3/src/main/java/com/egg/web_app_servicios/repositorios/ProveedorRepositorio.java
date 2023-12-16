@@ -24,4 +24,6 @@ public interface ProveedorRepositorio extends JpaRepository<Proveedor, String>{
     List<Proveedor> findByTipoServicio(@Param("tipo_servicio") String tipo_servicio);
 
     public boolean existsByEmail(String email);
+    
+
 }

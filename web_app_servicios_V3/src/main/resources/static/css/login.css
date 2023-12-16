@@ -119,3 +119,10 @@ button a{
   font-size: 20px;
   color: #fff;
 }
+
+
+.card-title{
+    font-weight: bold;
+    text-align: center;
+    color: red;
+}

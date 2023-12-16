@@ -11,6 +11,7 @@ import com.egg.web_app_servicios.entidades.Usuario;
 import com.egg.web_app_servicios.enumeraciones.Rol;
 import com.egg.web_app_servicios.excepciones.MiException;
 import com.egg.web_app_servicios.repositorios.ClienteRepositorio;
+import com.egg.web_app_servicios.repositorios.ProveedorRepositorio;
 import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
 
 import java.util.ArrayList;
@@ -44,6 +45,11 @@ public class UsuarioService implements UserDetailsService {
     @Autowired
     private ClienteRepositorio clienteRepositorio;
     
+    @Autowired
+    private ProveedorRepositorio proveedorRepositorio;
+    
+    
+    
     @Transactional
     public Usuario crearUsuario(MultipartFile archivo, String nombre, String telefono, String email, String password, String pasword2)throws MiException {
         
@@ -66,16 +72,16 @@ public class UsuarioService implements UserDetailsService {
     @Transactional
     public Usuario modificarUsuario(String id, MultipartFile archivo, String nombre, String telefono, String email, String password, String pasword2) throws MiException{
         
-        validar(nombre, telefono, email, password, password);
+        
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         
         if(respuesta != null){
         Usuario usuario = respuesta.get();
         usuario.setNombre(nombre);
         usuario.setTelefono(telefono);
-        usuario.setEmail(email);
-        usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-        usuario.setRol(Rol.USER);
+//        usuario.setEmail(email);
+//        usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+//        usuario.setRol(Rol.USER);
         
         String idImagen = null;
         if(usuario.getImagen() != null){
@@ -195,4 +201,58 @@ public class UsuarioService implements UserDetailsService {
         
     }
      
+    @Transactional
+    public Usuario modificarUsuarioParaAdmin(String id, MultipartFile archivo, String nombre, String telefono, String email, String password, String pasword2) throws MiException{
+        
+        
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        
+        if(respuesta != null){
+        Usuario usuario = respuesta.get();
+        usuario.setNombre(nombre);
+        usuario.setTelefono(telefono);
+//        usuario.setEmail(email);
+//        usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+//        usuario.setRol(Rol.USER);
+        
+//        String idImagen = null;
+//        if(usuario.getImagen() != null){
+//            idImagen = usuario.getImagen().getId();
+//        }
+//        Imagen imagen = imagenService.actualizar(archivo, idImagen);
+//        
+//        usuario.setImagen(imagen);
+//          String idImagen = null;
+//          Imagen imagen = usuario.getImagen();
+//          usuario.setImagen(imagen);
+         
+        
+        usuarioRepositorio.save(usuario);
+        return usuario;
+        } else{
+            throw new MiException("No se encontró un usuario con el ID proporcionado: " + id);
+        }
+        
+    }
+
+   @Transactional
+public void eliminarUsuarioYProveedor(Usuario usuario, Proveedor proveedor, MultipartFile archivo) throws MiException {
+    String idImagen = null;
+    if (usuario.getImagen() != null) {
+        idImagen = usuario.getImagen().getId();
+    }
+    // Eliminar la imagen y el usuario en la misma transacción
+    Imagen imagen = imagenService.eliminar(archivo, idImagen);
+    usuarioRepositorio.delete(usuario);
+    proveedorRepositorio.delete(proveedor);
+}
+    
+@Transactional
+public void eliminarClienteYUsuario(Usuario usuario, Cliente cliente, MultipartFile archivo) throws MiException {
+    byte[] imagen = obtenerImagenDeUsuario(usuario.getId());
+    // Eliminar la imagen, el usuario y el cliente en la misma transacción
+    imagenService.eliminar(archivo, usuario.getImagen().getId());
+    usuarioRepositorio.delete(usuario);
+    clienteRepositorio.delete(cliente);
+}
 }

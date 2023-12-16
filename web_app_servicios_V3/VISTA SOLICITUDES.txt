@@ -1,0 +1,26 @@
+<!<!-- VISTA DE LAS SOLICITUDES -->
+            
+                   <div class="body-container" th:each="solicitud : ${solicitudes}">
+    <div class="review-container">
+        <!-- Puedes ajustar las clases y el estilo según tus necesidades -->
+        <div class="review-info-container">
+            <!-- Muestra la información del cliente -->
+<!--            <h4 th:text="'Cliente: ' + ${cliente.usuario.nombre}"></h4>
+            <p th:text="'Correo electrónico del cliente: ' + ${cliente.usuario.email}"></p>
+            <p th:text="'Teléfono del cliente: ' + ${cliente.usuario.telefono}"></p>-->
+
+            
+
+            <!-- Muestra otros atributos de la solicitud -->
+            <p th:text="'Fecha de solicitud: ' + ${solicitud.fecha}"></p>
+            <!-- Agrega aquí otros atributos que deseas mostrar -->
+
+            <!-- Enlace para solicitar el servicio -->
+            <a th:href="@{/contrato/solicitud/{clienteId}/{proveedorId}(clienteId=${solicitud.cliente.usuario.id},proveedorId=${solicitud.proveedor.usuario.id})}" class="boton modificar">Solicitar servicio</a>
+        </div>
+
+        <!-- Puedes ajustar la presentación de la descripción según tus necesidades -->
+        <p th:text="'Descripción: ' + ${solicitud.mensaje}"></p>
+    </div>
+    <hr style="border: 1px solid orange; " />
+</div>

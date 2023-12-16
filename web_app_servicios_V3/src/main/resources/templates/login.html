@@ -16,6 +16,19 @@
         </header>
 
         <form th:action="@{/logincheck}" method="POST">
+            
+            <div class="container-fluid m-5 contenedor">
+                <div
+                  th:if="${error != null}"
+                  class="card text-white bg-danger mb-3 mensajeError"
+                >
+                  <div class="card-body">
+                    <h4 class="card-title">Error!</h4>
+                    <p class="card-text" th:text="${error}"></p> 
+                  </div>
+                </div>
+            </div>
+            
             <label for="username">Nombre de Usuario:</label>
             <input type="text" id="username" name="email" required>
 

@@ -8,10 +8,12 @@ package com.egg.web_app_servicios.controladores;
 import com.egg.web_app_servicios.entidades.Cliente;
 import com.egg.web_app_servicios.entidades.Proveedor;
 import com.egg.web_app_servicios.entidades.Usuario;
+import com.egg.web_app_servicios.repositorios.UsuarioRepositorio;
 import com.egg.web_app_servicios.service.ClienteService;
 import com.egg.web_app_servicios.service.ProveedorService;
 import com.egg.web_app_servicios.service.UsuarioService;
 import javax.servlet.http.HttpSession;
+import static org.hibernate.criterion.Projections.id;
 
 
 
@@ -48,6 +50,11 @@ public class PortalControlador {
    
    @Autowired
    private UsuarioService usuarioService;
+   
+   @Autowired
+   private UsuarioRepositorio usuarioRepositorio;
+   
+   @Autowired
    private ClienteService clienteService;
 
     
@@ -103,7 +110,15 @@ public class PortalControlador {
         return "usuario_modificar.html";
     }
     
-   
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/modificar_usuario/{id}")
+    public String modificarUsuario(@PathVariable String id, ModelMap modelo) {
+        Usuario usuario = usuarioRepositorio.getOne(id);
+        
+        modelo.addAttribute("usuario", usuario);
+        
+        return "usuario_modificar_por_admin.html";
+    }
     
     
     

@@ -33,6 +33,9 @@ public class Usuario{
 
     @OneToOne(mappedBy = "usuario")
     private Proveedor proveedor;
+    
+    @OneToOne(mappedBy = "usuario")
+    private Solicitud solicitud;
 
     public Usuario() {
     }
@@ -107,6 +110,14 @@ public class Usuario{
 
     public void setProveedor(Proveedor proveedor) {
         this.proveedor = proveedor;
+    }
+
+    public Solicitud getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Solicitud solicitud) {
+        this.solicitud = solicitud;
     }
 
     
